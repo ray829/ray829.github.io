@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  // publicPath: '/',
+  publicPath: '/',
   chainWebpack: config => {
     config.plugin('html')
       .tap(args => {

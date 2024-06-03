@@ -95,7 +95,7 @@ export default {
         content: '';
         position: absolute;
         left: 2px;
-        bottom: -1px;
+        bottom: -5px;
         width: 0;
         height: 3px;
         background-color: black;

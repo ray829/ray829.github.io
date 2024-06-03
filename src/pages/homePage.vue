@@ -1,12 +1,14 @@
 <template>
   <div class="homePage">
       <div class="markdown">
-        <img src="../../public/fig1.jpg" alt="">
         <el-card v-for="item in mdList" :key="item.time" class="my-record">
-          <router-link :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.name }}</router-link>
-          <p>title: {{ item.title }}</p>
-          <p>time: {{ item.time }}</p>
-          <p>desc: {{ item.desc }}</p>
+          <img :src="require(`../../public/${item.imgInd}`)" alt="">
+          <div class="mdBlurb">
+            <router-link :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.name }}</router-link>
+            <p>title: {{ item.title }}</p>
+            <p>time: {{ item.time }}</p>
+            <p>desc: {{ item.desc }}</p>
+          </div>
         </el-card>
       </div>
       <div class="user">
@@ -89,6 +91,7 @@ export default {
     //滚动条
     &::-webkit-scrollbar {
       width: 9px;
+      // display: none;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -111,16 +114,31 @@ export default {
   }
   .my-record {
     height: 24vh;
-    display: grid;
-    grid-template-columns: 35% 65%;
-    grid-template-rows: auto;
-    align-items: center;
     border-radius: 15px;
+    display: grid;
+    align-items: center;
     margin-right: 10px;
     margin-bottom: 10px;
     background-color: rgba(255, 255, 255, .8);
-    a {
-      font-size: 1.8rem;
+    /deep/ .el-card__body {
+      display: grid;
+      grid-template-columns: 35% 63%;
+      grid-template-rows: 100%;
+      align-items: center;
+      justify-content: center;
+      column-gap: 2%;
+      img {
+        grid-column-start: 1;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .mdBlurb {
+        grid-column-start: 2;
+        a {
+          font-size: 1.8rem;
+        }
+      }
     }
   }
   .user {
@@ -129,10 +147,13 @@ export default {
     width: 80%;
     position: fixed;
     .el-card {
+      border-radius: 15px;
       width: 100%;
       background-color: rgba(255, 255, 255, .8);
+      transition: all .5s cubic-bezier(.25,.65,.6,.91);
       &:hover {
         transform: translateY(-3px);
+        box-shadow: 3px 8px 10px 0px var(--scroll-hover-color);
       }
       /deep/.el-card__body {
         display: grid;
@@ -144,6 +165,8 @@ export default {
       .user_img {
         grid-row-start: r1;
         overflow: hidden;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
         img {
           height: 100%;
         }
