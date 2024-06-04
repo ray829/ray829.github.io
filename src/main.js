@@ -3,8 +3,8 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import axios from 'axios';
-import iconfont from '../public/icon/iconfont.css';
-import Highlight from './utils/highlight';
+import '@/assets/icon/iconfont.css';
+import Highlight from './utils/highlight.js';
 
 import {
   Button,
@@ -73,7 +73,6 @@ Vue.use(FormItem)
 Vue.use(Radio)
 Vue.use(DatePicker)
 Vue.use(Pagination)
-Vue.use(iconfont)
 Vue.use(Highlight)
 
 

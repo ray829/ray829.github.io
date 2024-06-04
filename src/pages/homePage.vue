@@ -2,7 +2,7 @@
   <div class="homePage">
       <div class="markdown">
         <el-card v-for="item in mdList" :key="item.time" class="my-record">
-          <img :src="require(`../../public/${item.imgInd}`)" alt="">
+          <img :src="require(`@/assets/images/${item.imgUrl}`)" alt="">
           <div class="mdBlurb">
             <router-link :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.name }}</router-link>
             <p>title: {{ item.title }}</p>
@@ -14,10 +14,10 @@
       <div class="user">
         <el-card shadow="hover">
           <div class="user_img" style="width: 100%; height: 100%;">
-            <img src="../../public/640.webp">
+            <img src="@/assets/images/640.webp">
           </div>
           <div class="user_sculpture">
-            <img src="../../public/cat1.jpeg" style="height:60px; transform: translate(25%, -50%);">
+            <img src="@/assets/images/cat1.jpeg" style="height:60px; transform: translate(25%, -50%);">
             <span class="user_title">只想摸鱼的博客</span>
             <br>
             <p>当一个人说我丑时我不以为然，</p>
@@ -49,7 +49,7 @@ export default {
 
   data() {
     return {
-      
+      imageUrl: '@/assets/images/',
     };
   },
 
@@ -91,7 +91,7 @@ export default {
     //滚动条
     &::-webkit-scrollbar {
       width: 9px;
-      // display: none;
+      //display: none;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -120,7 +120,7 @@ export default {
     margin-right: 10px;
     margin-bottom: 10px;
     background-color: rgba(255, 255, 255, .8);
-    /deep/ .el-card__body {
+    /deep/.el-card__body {
       display: grid;
       grid-template-columns: 35% 63%;
       grid-template-rows: 100%;

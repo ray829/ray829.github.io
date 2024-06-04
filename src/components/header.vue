@@ -1,7 +1,7 @@
 <template>
   <div class="header-contain">
     <div class="l-content">
-      <img class="head-sculpture" src="../../public/cat1.jpeg">
+      <img class="head-sculpture" src="@/assets/images/cat1.jpeg">
     </div>
     <ul class="r-content" >
       <li class="home"><i class="iconfont icon-home"></i>主页</li>

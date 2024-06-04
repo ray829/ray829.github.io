@@ -3,7 +3,8 @@ const path = require('path');
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath: '/',
+  publicPath: './',
+  assetsDir: 'assets',
   chainWebpack: config => {
     config.plugin('html')
       .tap(args => {
@@ -14,6 +15,6 @@ module.exports = defineConfig({
       .use('html-loader')
       .loader('html-loader')
       .end()
-  }
+  },
 })
 

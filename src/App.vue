@@ -75,13 +75,13 @@ export default {
 @font-face {
   font-family: "webfont";
   font-display: swap;
-  src: url("../public/font/webfont.eot"); /* IE9 */
-  src: url("../public/font/webfont.eot?#iefix") format("embedded-opentype"),
-    /* IE6-IE8 */ url("../public/font/webfont.woff2") format("woff2"),
-    url("../public/font/webfont.woff") format("woff"),
-    /* chrome、firefox */ url("../public/font/webfont.ttf") format("truetype"),
+  src: url("@/assets/font/webfont.eot"); /* IE9 */
+  src: url("@/assets/font/webfont.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("@/assets/font/webfont.woff2") format("woff2"),
+    url("@/assets/font/webfont.woff") format("woff"),
+    /* chrome、firefox */ url("@/assets/font/webfont.ttf") format("truetype"),
     /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-      url("../public/font/webfont.svg#webfont") format("svg"); /* iOS 4.1- */
+      url("@/assets/font/webfont.svg#webfont") format("svg"); /* iOS 4.1- */
 }
 
 :root {
@@ -107,7 +107,7 @@ body {
     font-weight: 600;
   }
   .principal-sheet {
-    background-image: url("../public/20240411194441.png");
+    background-image: url("@/assets/images/20240411194441.png");
     background-size: cover;
     width: 100vw;
     height: 100vh;
@@ -160,7 +160,7 @@ body {
     }
   }
   .dark {
-    background-image: url("../public/kwlz36.png");
+    background-image: url("@/assets/images/kwlz36.png");
     background-color: #3e3841;
   }
 }

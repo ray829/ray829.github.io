@@ -48,7 +48,7 @@ export default {
 }
 
 .el-main {
-  background-image: url("../../public/maoyu.jpeg");
+  background-image: url("@/assets/images/maoyu.jpeg");
   background-attachment: fixed;
   background-size: cover;
   // min-height: calc(100vh - 40px);
