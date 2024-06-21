@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import mdTitle from "./mdTitle";
+import loadingState from "./loadingState";
 
 Vue.use(Vuex)
 
@@ -25,5 +26,6 @@ export default new Vuex.Store({
     // state,
     modules: {
         mdTitle,
+        loadingState
     },
 })

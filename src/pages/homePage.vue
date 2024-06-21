@@ -91,15 +91,16 @@ export default {
     //滚动条
     &::-webkit-scrollbar {
       width: 9px;
-      //display: none;
     }
-
     &::-webkit-scrollbar-thumb {
-      background: #bfbfbf;
+      background: transparent;
       border-color: transparent;
       border-radius: 10px;
       border-width: 4px;
       background-clip: padding-box;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+      background: #bfbfbf;
     }
 
     &::-webkit-scrollbar-thumb:hover {

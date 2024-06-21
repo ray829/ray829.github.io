@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container height="100%">
-      <el-header height="53px">
+      <el-header height="50px">
         <myHeader />
       </el-header>
       <el-main>
@@ -79,9 +79,10 @@ export default {
 }
 .el-footer {
   position: fixed;
+  z-index: 10;
   width: 100%;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 1);
   text-align: center;
   font: 600 1.3rem '新宋体','楷体';
 } 

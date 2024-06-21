@@ -1,18 +1,26 @@
 <template>
   <div id="app">
-    <div v-show="isShow" class="principal-sheet light">
-      <decoration />
-      <div class="web-font">只想摸鱼的博客</div>
-      <div class="myTyper"><mytyper /></div>
-      <div class="navigation">
-        <router-link to="/home">首页</router-link>
-        <router-link to="/photo">相册</router-link>
-        <router-link to="/daylog">说说</router-link>
-        <router-link to="/about">档案</router-link>
-        <span @click="switchTheme">切换</span>
-      </div>
+    <div v-show="isLoading" class="loading">
+      <globalLoading />
+      <div class="txt">Loading...</div>
     </div>
-    <myMain v-show="!isShow" />
+    <div v-show="!isLoading">
+      <div v-show="isShow" class="principal-sheet light">
+        <decoration />
+        <div class="web-font">只想摸鱼的博客</div>
+        <div class="myTyper">
+          <mytyper />
+        </div>
+        <div class="navigation">
+          <router-link to="/home">首页</router-link>
+          <router-link to="/photo">相册</router-link>
+          <router-link to="/daylog">说说</router-link>
+          <router-link to="/about">档案</router-link>
+          <span @click="switchTheme">切换</span>
+        </div>
+      </div>
+      <myMain v-show="!isShow" />
+    </div>
   </div>
 </template>
 
@@ -20,6 +28,7 @@
 import myMain from "./pages/Main";
 import mytyper from "@/components/typer";
 import decoration from "@/components/myDecoration";
+import globalLoading from "@/components/globalLoading.vue";
 
 export default {
   name: "App",
@@ -27,11 +36,14 @@ export default {
     myMain,
     mytyper,
     decoration,
+    globalLoading
   },
   data() {
     return {
       isShow: true,
       Theme: true,
+      isLoading: true,
+      bacImgUrl: require('./assets/images/20240411194441.png')
     };
   },
   watch: {
@@ -53,6 +65,14 @@ export default {
       this.isShow = JSON.parse(sessionStorage.getItem("isShow"));
       // App主组件中定义，在子组件中刷新会重新调用该组件，从而导致markdown中传递的query参数会在刷新页面时丢失
       this.$router.push(JSON.parse(sessionStorage.getItem("routes")));
+    }
+    let bgImg = new Image();
+    bgImg.src = this.bacImgUrl;
+    bgImg.onload = () => {
+      this.isLoading = false;
+    }
+    bgImg.onerror = () => {
+      console.log('img onerror');
     }
   },
   mounted() {},
@@ -105,6 +125,26 @@ body {
     color: inherit;
     font-size: 20px;
     font-weight: 600;
+  }
+  #app {
+    height: 100vh;
+    width: 100vw;
+  }
+  .loading {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #47484c;
+    .txt {
+      margin-top: 80px;
+      color: rgba(255, 255, 255, 1);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 5px;
+    }
   }
   .principal-sheet {
     background-image: url("@/assets/images/20240411194441.png");
