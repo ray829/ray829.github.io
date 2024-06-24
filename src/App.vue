@@ -2,9 +2,8 @@
   <div id="app">
     <div v-show="isLoading" class="loading">
       <globalLoading />
-      <div class="txt">Loading...</div>
     </div>
-    <div v-show="!isLoading">
+    <div v-show="!isLoading" style="height: 100%;">
       <div v-show="isShow" class="principal-sheet light">
         <decoration />
         <div class="web-font">只想摸鱼的博客</div>
@@ -112,11 +111,14 @@ export default {
   background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
 }
 html,
-body {
+body,
+#app {
   padding: 0;
   margin: 0;
+  height: 100%;
+  overflow: hidden;
   font: 14px "KaiTi_GB2312";
-  h1,h2,h3,h4 {
+  h1,h2,h3,h4, p {
     margin: 0;
     padding: 0;
   }
@@ -126,13 +128,8 @@ body {
     font-size: 20px;
     font-weight: 600;
   }
-  #app {
-    height: 100vh;
-    width: 100vw;
-  }
   .loading {
     height: 100%;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -149,8 +146,7 @@ body {
   .principal-sheet {
     background-image: url("@/assets/images/20240411194441.png");
     background-size: cover;
-    width: 100vw;
-    height: 100vh;
+    height: 100%;
     position: relative;
 
     .web-font {

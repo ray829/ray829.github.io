@@ -26,7 +26,7 @@ export default {
 
 <style lang="less" scoped>
 .f-main {
-  line-height: 40px;
+  line-height: 30px;
   text-align: center;
 }
 </style>

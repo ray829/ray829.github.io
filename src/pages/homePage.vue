@@ -87,7 +87,7 @@ export default {
   column-gap: 20px;
   .markdown {
     overflow-y: scroll;
-    height: 84vh;
+    height: 85vh;
     //滚动条
     &::-webkit-scrollbar {
       width: 9px;
@@ -114,8 +114,9 @@ export default {
 
   }
   .my-record {
-    height: 24vh;
+    height: 200px;
     border-radius: 15px;
+    border-width: 0px;
     display: grid;
     align-items: center;
     margin-right: 10px;
@@ -123,11 +124,13 @@ export default {
     background-color: rgba(255, 255, 255, .8);
     /deep/.el-card__body {
       display: grid;
+      height: 100%;
       grid-template-columns: 35% 63%;
       grid-template-rows: 100%;
       align-items: center;
       justify-content: center;
       column-gap: 2%;
+      padding: 0;
       img {
         grid-column-start: 1;
         width: 100%;
@@ -136,8 +139,12 @@ export default {
       }
       .mdBlurb {
         grid-column-start: 2;
+        align-self: self-start;
         a {
-          font-size: 1.8rem;
+          font-size: 16px;
+        }
+        p {
+          margin-bottom: 5px;
         }
       }
     }
@@ -158,9 +165,8 @@ export default {
       }
       /deep/.el-card__body {
         display: grid;
-        height: 50vh;
         grid-template-columns: 100%;
-        grid-template-rows: [r1] 40% [r2] 25% [r3] 15% [r4] 20% [r5];
+        grid-template-rows: [r1] 40% [r2] 25% [r3] 18% [r4] 17% [r5];
         padding: 0;
       }
       .user_img {
@@ -169,7 +175,7 @@ export default {
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
         img {
-          height: 100%;
+          width: 100%;
         }
       }
       .user_sculpture {

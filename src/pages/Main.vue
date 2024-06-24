@@ -7,7 +7,7 @@
       <el-main>
         <router-view class="route"></router-view>
       </el-main>
-      <el-footer height="40px">
+      <el-footer height="30px">
         <myFooter />
       </el-footer>
     </el-container>
@@ -71,7 +71,7 @@ export default {
     font-size: 1.4rem;
     position: absolute;
     width: 1200px;
-    top: 90px;
+    top: 5vw;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -84,6 +84,7 @@ export default {
   bottom: 0;
   background-color: rgba(255, 255, 255, 1);
   text-align: center;
-  font: 600 1.3rem '新宋体','楷体';
+  align-items: center;
+  font: 600 1rem '新宋体','楷体';
 } 
 </style>
