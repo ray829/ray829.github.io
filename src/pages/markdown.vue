@@ -31,7 +31,7 @@ export default {
     },
     mounted() {
         const mdName = this.$route.query.mdName;
-        const mdUrl = './posts/' + mdName + '.md';
+        const mdUrl = '/posts/' + mdName + '.md';
         console.log(__dirname);
         this.loadFile(mdUrl)
         .then(data => {
@@ -93,10 +93,6 @@ export default {
             this.mdContent = result;
         }
 
-    },
-    beforeDestroy() {
-        // console.log('被销毁了');
-        sessionStorage.clear();
     }
 };
 </script>
@@ -104,9 +100,18 @@ export default {
 <style lang="less" scoped>
    .md {
     display: grid;
+    height: 100%;
     grid-template-columns: [c1] 75% [c2] auto [c3];
-    grid-template-rows: auto;
+    grid-template-rows: 1fr;
+    overflow: scroll;
     column-gap: 20px;
+    .markdown-body {
+        background-color: var(--card-mask-color);
+        color: rgba(77, 86, 86, 1)
+    }
+    .markdown-toc {
+        background-color: var(--card-mask-color);
+    }
     .catalog {
         margin: 0;
         padding-bottom: 10px;
