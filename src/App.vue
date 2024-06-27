@@ -122,12 +122,6 @@ body,
     margin: 0;
     padding: 0;
   }
-  a {
-    text-decoration: none;
-    color: inherit;
-    font-size: 20px;
-    font-weight: 600;
-  }
   .loading {
     height: 100%;
     display: flex;

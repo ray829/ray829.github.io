@@ -100,36 +100,65 @@ export default {
 <style lang="less" scoped>
    .md {
     display: grid;
-    height: 100%;
-    grid-template-columns: [c1] 75% [c2] auto [c3];
-    grid-template-rows: 1fr;
-    overflow: scroll;
+    // grid-template-columns: [c1] 75% [c2] auto [c3];
+    // grid-template-rows: 1fr;
     column-gap: 20px;
-    .markdown-body {
-        background-color: var(--card-mask-color);
-        color: rgba(77, 86, 86, 1)
-    }
-    .markdown-toc {
-        background-color: var(--card-mask-color);
-    }
-    .catalog {
-        margin: 0;
-        padding-bottom: 10px;
-        font-weight: 600;
-        border-bottom: 1px solid var(--color-gray);
-    }
-    /deep/.catalog-content {
-        color: var(--font-color);
-        font-weight: inherit;
-        font-weight: 300;
-        font-size: 1rem;
-        a {
-            display: inline-block;
-            font-size: 1.3rem;
-            font-weight: 400;
-            margin-bottom: 8px;
+    /deep/ .markdown-body {
+        width: 70%;
+        overflow: scroll;
+        height: 85vh;
+        background-color: transparent;
+        color: rgb(34, 35, 35);
+        h1, h2, h3, h4, h5, h6 {
+            border-bottom-width: 0;
+        }
+        &::-webkit-scrollbar {
+            width: 9px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-color: transparent;
+            border-radius: 10px;
+            border-width: 4px;
+            background-clip: padding-box;
+        }
+        &:hover::-webkit-scrollbar-thumb {
+            background: #bfbfbf;
         }
 
-    } 
+        &::-webkit-scrollbar-thumb:hover {
+            background: var(--scroll-hover-color);
+            background-clip: border-box;
+        }
+    }
+    .markdown-toc {
+        width: 20%;
+        max-height: 300px;
+        border-width: 0;
+        position: fixed;
+        left: 71%;
+        background-color: var(--card-mask-color);
+        .catalog {
+                margin: 0;
+                padding-bottom: 10px;
+                font-weight: 600;
+                border-bottom: 1px solid var(--color-gray);
+            }
+        
+        /deep/.catalog-content {
+            color: var(--font-color);
+            font-weight: inherit;
+            font-weight: 300;
+            font-size: 1rem;
+    
+            a {
+                display: inline-block;
+                font-size: 1.3rem;
+                font-weight: 400;
+                margin-bottom: 8px;
+            }
+    
+        }
+    }
    }
 </style>

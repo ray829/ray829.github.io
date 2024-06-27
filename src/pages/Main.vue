@@ -82,9 +82,10 @@ export default {
   z-index: 10;
   width: 100%;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: transparent;
   text-align: center;
   align-items: center;
   font: 600 1rem '新宋体','楷体';
+  color: rgba(103, 103, 103, 1);
 } 
 </style>

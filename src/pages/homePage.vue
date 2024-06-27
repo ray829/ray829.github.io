@@ -1,42 +1,42 @@
 <template>
   <div class="homePage">
-      <div class="markdown">
-        <el-card v-for="item in mdList" :key="item.time" class="my-record">
-          <img :src="require(`@/assets/images/${item.imgUrl}`)" alt="">
-          <div class="mdBlurb">
-            <router-link :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.name }}</router-link>
-            <p>title: {{ item.title }}</p>
-            <p>time: {{ item.time }}</p>
-            <p>desc: {{ item.desc }}</p>
-          </div>
-        </el-card>
-      </div>
-      <div class="user">
-        <el-card shadow="hover">
-          <div class="user_img" style="width: 100%; height: 100%;">
-            <img src="@/assets/images/640.webp">
-          </div>
-          <div class="user_sculpture">
-            <img src="@/assets/images/cat1.jpeg" style="height:60px; transform: translate(25%, -50%);">
-            <span class="user_title">只想摸鱼的博客</span>
-            <br>
-            <p>当一个人说我丑时我不以为然，</p>
-            <br>
-            <p>当越来越多的人说我丑时，</p>
-            <br>
-            <p>我才知道现在骗子越来越多了</p>
-          </div>
-          <div class="entrance button_entrance" @click="backHome">
-            <span class="entrance_text">Go Back</span>
-          </div>
-          <ul class="home_info">
-            <li><i class="iconfont icon-bilibili"></i></li>
-            <li><i class="iconfont icon-weixin"></i></li>
-            <li><i class="iconfont icon-QQ-circle-fill"></i></li>
-            <li><i class="iconfont icon-github-fill"></i></li>
-          </ul>
-        </el-card>
-      </div>
+    <div class="markdown">
+      <el-card v-for="item in mdList" :key="item.time" class="my-record">
+        <img :src="require(`@/assets/images/${item.imgUrl}`)" alt="">
+        <div class="mdBlurb">
+          <router-link class="title" :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.title
+            }}</router-link>
+          <div><i class="iconfont icon-date"></i> 发表于 {{ item.time }} | <i class="iconfont icon-tags"></i> {{ item.tag }}</div>
+          <span>{{ item.desc }}</span>
+        </div>
+      </el-card>
+    </div>
+    <div class="user">
+      <el-card shadow="hover">
+        <div class="user_img" style="width: 100%; height: 100%;">
+          <img src="@/assets/images/640.webp">
+        </div>
+        <div class="user_sculpture">
+          <img src="@/assets/images/cat1.jpeg" style="height:60px; transform: translate(25%, -50%);">
+          <span class="user_title">只想摸鱼的博客</span>
+          <br>
+          <p>当一个人说我丑时我不以为然，</p>
+          <br>
+          <p>当越来越多的人说我丑时，</p>
+          <br>
+          <p>我才知道现在骗子越来越多了</p>
+        </div>
+        <div class="entrance button_entrance" @click="backHome">
+          <span class="entrance_text">Go Back</span>
+        </div>
+        <ul class="home_info">
+          <li><i class="iconfont icon-bilibili"></i></li>
+          <li><i class="iconfont icon-weixin"></i></li>
+          <li><i class="iconfont icon-QQ-circle-fill"></i></li>
+          <li><i class="iconfont icon-github-fill"></i></li>
+        </ul>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -125,11 +125,11 @@ export default {
     /deep/.el-card__body {
       display: grid;
       height: 100%;
-      grid-template-columns: 35% 63%;
+      grid-template-columns: [c1] 35% [c2] 60% [c3];
       grid-template-rows: 100%;
       align-items: center;
       justify-content: center;
-      column-gap: 2%;
+      column-gap: 5%;
       padding: 0;
       img {
         grid-column-start: 1;
@@ -140,11 +140,38 @@ export default {
       .mdBlurb {
         grid-column-start: 2;
         align-self: self-start;
+        color: rgba(103, 103, 103, 1);
+        padding-right: 5%;
+        display: grid;
+        cursor: default;
         a {
-          font-size: 16px;
+          text-decoration: none;
+          color: inherit;
+          font-weight: 900;
+          font-size: 28px;
+          letter-spacing: 1.5px;
+          justify-self: center;
+          margin-top: 10%;
+          margin-bottom: 2%;
+          transition: transform .2s linear;
+          cursor: pointer;
+          &:hover {
+            transform: scale(1.05);
+          }
         }
-        p {
-          margin-bottom: 5px;
+        div {
+          justify-self: center;
+          font-size: 16px;
+          color: rgba(133, 133, 133, .6);
+        }
+        span {
+          margin-top: 4%;
+          font-size: 18px;
+          display: inline-block;
+          overflow: hidden;
+          width: 100%;
+          text-wrap: nowrap;
+          text-overflow: ellipsis;
         }
       }
     }
