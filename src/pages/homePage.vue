@@ -83,7 +83,7 @@ export default {
 <style lang="less" scoped>
 .homePage {
   display: grid;
-  grid-template-columns: [c1] 70% [c2] auto [c3];
+  grid-template-columns: [c1] 75% [c2] auto [c3];
   column-gap: 20px;
   .markdown {
     overflow-y: scroll;
@@ -179,8 +179,9 @@ export default {
   .user {
     grid-column-start: c2;
     font-size: 1.2rem;
-    width: 80%;
+    width: 100%;
     position: fixed;
+    justify-self: right;
     .el-card {
       border-radius: 15px;
       width: 100%;

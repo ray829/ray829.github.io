@@ -51,7 +51,6 @@ export default {
   background-image: url("@/assets/images/maoyu.jpeg");
   background-attachment: fixed;
   background-size: cover;
-  // min-height: calc(100vh - 40px);
   height: 100vh;
   position: relative;
   overflow: hidden;
@@ -85,7 +84,7 @@ export default {
   background-color: transparent;
   text-align: center;
   align-items: center;
-  font: 600 1rem '新宋体','楷体';
-  color: rgba(103, 103, 103, 1);
+  font: 600 1.2rem '新宋体','楷体';
+  color: rgb(46, 45, 45);
 } 
 </style>

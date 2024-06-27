@@ -100,13 +100,12 @@ export default {
 <style lang="less" scoped>
    .md {
     display: grid;
-    // grid-template-columns: [c1] 75% [c2] auto [c3];
-    // grid-template-rows: 1fr;
     column-gap: 20px;
     /deep/ .markdown-body {
-        width: 70%;
+        width: 73%;
         overflow: scroll;
         height: 85vh;
+        padding-right: 1%;
         background-color: transparent;
         color: rgb(34, 35, 35);
         h1, h2, h3, h4, h5, h6 {
@@ -130,13 +129,18 @@ export default {
             background: var(--scroll-hover-color);
             background-clip: border-box;
         }
+
+        &::-webkit-scrollbar-corner {
+            display: none;
+            // background: #bfbfbf;
+        }
     }
     .markdown-toc {
-        width: 20%;
+        width: calc(25% - 20px);
         max-height: 300px;
         border-width: 0;
         position: fixed;
-        left: 71%;
+        right: 0;
         background-color: var(--card-mask-color);
         .catalog {
                 margin: 0;
