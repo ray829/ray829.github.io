@@ -119,7 +119,6 @@ body,
   overflow: hidden;
   font: 14px "KaiTi_GB2312";
   h1,h2,h3,h4, p {
-    margin: 0;
     padding: 0;
   }
   .loading {

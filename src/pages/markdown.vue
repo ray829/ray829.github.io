@@ -12,8 +12,23 @@
 <script>
 import MarkdownIt from "markdown-it";
 import 'github-markdown-css';
-import markdownItAnchor from 'markdown-it-anchor';
-import markdownItTocDoneRight from 'markdown-it-toc-done-right';
+// import markdownItAnchor from 'markdown-it-anchor';
+// import markdownItTocDoneRight from 'markdown-it-toc-done-right';
+// .use(markdownItAnchor, {
+//                 permalinkBefore: false,//这些有需要就去看文档吧
+//                 tabIndex: true
+//             })
+//             .use(markdownItTocDoneRight, {
+//                 containerClass: 'toc',//生成的容器的类名，这样最后返回来的字符串是 <nav class="toc"><nav/>
+//                 containerId: 'toc',//生成的容器的ID，这样最后返回来的字符串是 <nav id="toc"><nav/>
+//                 listType: 'ul',//导航列表使用ul还是ol
+//                 listClass: 'listClass',//li标签的样式名
+//                 linkClass: 'linkClass',//a标签的样式名
+//                 callback: function (html,) {
+//                     //把目录单独列出来
+//                     that.$refs.reference.innerHTML = html;
+//                 }
+//             })
 
 export default {
     name: 'CyberloafingMarkdown',
@@ -21,6 +36,7 @@ export default {
     data() {
         return {
             mdContent: '',
+            catalogContent: [],
         };
     },
 
@@ -32,17 +48,8 @@ export default {
     mounted() {
         const mdName = this.$route.query.mdName;
         const mdUrl = '/posts/' + mdName + '.md';
-        console.log(__dirname);
         this.loadFile(mdUrl)
-        .then(data => {
-            // console.log(data);
-            // const md = new MarkdownIt({
-                //     html: true, //可以识别html
-                //     linkify: true,//自动检测像链接的文本
-                //     breaks: true,//回车换行
-                //     typographer: true,//优化排版，标点
-                // });
-                // this.mdContent = md.render(data);
+            .then(data => {
                 this.renderMarkdown(data);
             })
             .catch(error => {
@@ -51,7 +58,10 @@ export default {
     },
 
     methods: {
-         loadFile(filePath) {
+        // addMdId(data) {
+            
+        // },
+        loadFile(filePath) {
             return fetch(filePath)
             .then(response => {
                 if (!response.ok) {
@@ -69,28 +79,39 @@ export default {
             });
         },
         renderMarkdown(mymd) {
-            const that = this;
-            const md = new MarkdownIt().use(markdownItAnchor, {
-                permalink: markdownItAnchor.permalink.ariaHidden({
-                    placement: 'before'
-                }),
-                permalinkBefore: false//这些有需要就去看文档吧
-            })
-            .use(markdownItTocDoneRight, {
-                containerClass: 'toc',//生成的容器的类名，这样最后返回来的字符串是 <nav class="toc"><nav/>
-                containerId: 'toc',//生成的容器的ID，这样最后返回来的字符串是 <nav id="toc"><nav/>
-                listType: 'ul',//导航列表使用ul还是ol
-                listClass: 'listClass',//li标签的样式名
-                linkClass: 'linkClass',//a标签的样式名
-                callback: function (html,) {
-                    //把目录单独列出来
-                    that.$refs.reference.innerHTML = html;
-                }
-            })
-            // const result = md.render(this.markdown)
+            // const that = this;
+            const md = new MarkdownIt({
+                html: true, //源码中启用HTML标签
+                xhtmlOut: true, //使用‘/’来闭合单标签
+                linkify: true //将类似URL的文本自动转换为链接
+            });
+            // md.renderer.rules.heading_open = function (tokens) {
+            //     console.log(tokens);
+            //     // const token = tokens[idx];
+            //     // switch (token.tag) {
+            //     // case 'h1':
+            //     //     token.attrPush(['class', 'custom-class-h1']);
+            //     //     break;
+            //     // case 'h2':
+            //     //     token.attrPush(['class', 'custom-class-h2']);
+            //     //     break;
+            //     // // 添加其他标题标签的样式
+            //     // }
+                
+            //     // return self.renderToken(tokens, idx, options);
+            // };
+
+            let re = /<h[1-6](([\s\S])*?)<\/h[1-6]>/g;
             const result = md.render(mymd);
-            // console.log(result);
+            let nav = result.match(re);
+            nav.map((val, ind) => {
+                val = val.match(/<h[1-6]>(.*?)<\/h[1-6]>/)[1];
+                // console.log(val);
+                nav[ind] = val;
+            });
+            console.log(nav);
             this.mdContent = result;
+            console.log(result);
         }
 
     }
@@ -102,14 +123,24 @@ export default {
     display: grid;
     column-gap: 20px;
     /deep/ .markdown-body {
-        width: 73%;
+        width: 70%;
         overflow: scroll;
         height: 85vh;
-        padding-right: 1%;
-        background-color: transparent;
-        color: rgb(34, 35, 35);
+        font-size: 18px;
+        padding: 0 2%;
+        background-color: rgba(255, 255, 255, .6);
+        border-radius: 5px;
+        color: rgba(83, 83, 83, 1);
         h1, h2, h3, h4, h5, h6 {
             border-bottom-width: 0;
+            cursor: default;
+        }
+        p {
+            cursor: default;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px !important;
         }
         &::-webkit-scrollbar {
             width: 9px;
@@ -141,7 +172,7 @@ export default {
         border-width: 0;
         position: fixed;
         right: 0;
-        background-color: var(--card-mask-color);
+        background-color: rgba(255, 255, 255, .6);
         .catalog {
                 margin: 0;
                 padding-bottom: 10px;
@@ -149,7 +180,7 @@ export default {
                 border-bottom: 1px solid var(--color-gray);
             }
         
-        /deep/.catalog-content {
+        /deep/ .catalog-content {
             color: var(--font-color);
             font-weight: inherit;
             font-weight: 300;
@@ -160,6 +191,16 @@ export default {
                 font-size: 1.3rem;
                 font-weight: 400;
                 margin-bottom: 8px;
+            }
+
+            .listClass,
+            .linkClass {
+                list-style: none;
+                text-decoration: none;
+                color: rgba(103, 103, 103, 1);
+            }
+            .listClass {
+                padding-left: 20px;
             }
     
         }
