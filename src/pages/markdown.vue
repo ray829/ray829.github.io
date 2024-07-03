@@ -85,6 +85,16 @@ export default {
                 xhtmlOut: true, //使用‘/’来闭合单标签
                 linkify: true //将类似URL的文本自动转换为链接
             });
+            // eslint-disable-next-line no-unused-vars
+            md.renderer.rules.heading_open = function (tokens, idx, options, env, self) {
+                let tag = tokens[idx].tag;
+                if (/^h[1-6]$/.test(tag)) {
+                    console.log(`这是标题标签：${tag}`);
+                    console.log(tokens[idx + 1]);
+                    let id = tokens[idx + 1].content;
+                    return `<id="${id}">`;
+                }
+            }
             // md.renderer.rules.heading_open = function (tokens) {
             //     console.log(tokens);
             //     // const token = tokens[idx];
