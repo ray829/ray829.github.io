@@ -1,34 +1,22 @@
 <template>
-    <div class="md">
-        <div class="markdown-body" v-highlight v-html="mdContent"></div>
-        <el-card class="markdown-toc">
-            <h3 class="catalog">目录</h3>
-            <div ref="reference" class="catalog-content"></div>
-        </el-card>
+    <div style="height: 100%; padding-top: 50px; box-sizing: border-box;">
+        <div class="md">
+            <div class="markdown-body" v-highlight v-html="mdContent"></div>    
+            <div class="catalog">
+                <div class="catalog-container" :id=item.content v-for="(item, index) in catalogContent" :key="index" @click="handleAnchor(item)">
+                    <div :class="item.tag" class="listStyle"></div>
+                    <div class="catalog-nav">{{ item.content }}</div>
+                </div>
+            </div>
+        </div>
+        <!-- <myFooter></myFooter> -->
     </div>
-    
 </template>
 
 <script>
 import MarkdownIt from "markdown-it";
+// import myFooter from "@/components/myFooter.vue";
 import 'github-markdown-css';
-// import markdownItAnchor from 'markdown-it-anchor';
-// import markdownItTocDoneRight from 'markdown-it-toc-done-right';
-// .use(markdownItAnchor, {
-//                 permalinkBefore: false,//这些有需要就去看文档吧
-//                 tabIndex: true
-//             })
-//             .use(markdownItTocDoneRight, {
-//                 containerClass: 'toc',//生成的容器的类名，这样最后返回来的字符串是 <nav class="toc"><nav/>
-//                 containerId: 'toc',//生成的容器的ID，这样最后返回来的字符串是 <nav id="toc"><nav/>
-//                 listType: 'ul',//导航列表使用ul还是ol
-//                 listClass: 'listClass',//li标签的样式名
-//                 linkClass: 'linkClass',//a标签的样式名
-//                 callback: function (html,) {
-//                     //把目录单独列出来
-//                     that.$refs.reference.innerHTML = html;
-//                 }
-//             })
 
 export default {
     name: 'CyberloafingMarkdown',
@@ -37,8 +25,11 @@ export default {
         return {
             mdContent: '',
             catalogContent: [],
+            mdtitle: [],
         };
     },
+
+    // components: {myFooter},
 
     computed: {
 
@@ -58,9 +49,6 @@ export default {
     },
 
     methods: {
-        // addMdId(data) {
-            
-        // },
         loadFile(filePath) {
             return fetch(filePath)
             .then(response => {
@@ -89,56 +77,67 @@ export default {
             md.renderer.rules.heading_open = function (tokens, idx, options, env, self) {
                 let tag = tokens[idx].tag;
                 if (/^h[1-6]$/.test(tag)) {
-                    console.log(`这是标题标签：${tag}`);
-                    console.log(tokens[idx + 1]);
                     let id = tokens[idx + 1].content;
-                    return `<id="${id}">`;
+                    tokens[idx].attrPush(['id', id]);
                 }
+                return self.renderToken(tokens, idx, options);
             }
-            // md.renderer.rules.heading_open = function (tokens) {
-            //     console.log(tokens);
-            //     // const token = tokens[idx];
-            //     // switch (token.tag) {
-            //     // case 'h1':
-            //     //     token.attrPush(['class', 'custom-class-h1']);
-            //     //     break;
-            //     // case 'h2':
-            //     //     token.attrPush(['class', 'custom-class-h2']);
-            //     //     break;
-            //     // // 添加其他标题标签的样式
-            //     // }
-                
-            //     // return self.renderToken(tokens, idx, options);
-            // };
 
             let re = /<h[1-6](([\s\S])*?)<\/h[1-6]>/g;
             const result = md.render(mymd);
             let nav = result.match(re);
             nav.map((val, ind) => {
-                val = val.match(/<h[1-6]>(.*?)<\/h[1-6]>/)[1];
-                // console.log(val);
-                nav[ind] = val;
+                if (val.match(/<h[1-6]\s*[^>]*>(.*?)<\/h[1-6]>/)) {
+                    val = val.match(/<(h[1-6])\s*[^>]*>(.*?)<\/h[1-6]>/);
+                    nav[ind] = val[1];
+                    let tmp = { tag: val[1], content: val[2] };
+                    this.catalogContent.push(tmp);
+                }
             });
-            console.log(nav);
+            console.log(this.catalogContent);
             this.mdContent = result;
-            console.log(result);
+        },
+        handleAnchor(item) {
+            const navTitle = document.getElementById(item.content);
+            navTitle.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            })
         }
-
     }
 };
 </script>
 
 <style lang="less" scoped>
+    @catalog-font: 16px;
+    .h1 {
+        width: 22px;
+        margin-right: 8px;
+    }
+    .h2 {
+        width: 16px;
+        margin-right: 14px;
+    }
+    .h3 {
+        width: 12px;
+        margin-right: 16px;
+    }
    .md {
     display: grid;
-    column-gap: 20px;
+    background-color: rgba(255, 255, 255, .6);
+    width: 100%;
+    height: 100%;
+    grid-template-columns: [c1] 20% [c2] 60% [c3] 20% [c4];
     /deep/ .markdown-body {
-        width: 70%;
+        grid-column: 2/3;
+        width: 100%;
+        height: 100%;
+        justify-self: center;
+        box-sizing: border-box;
         overflow: scroll;
-        height: 85vh;
         font-size: 18px;
-        padding: 0 2%;
-        background-color: rgba(255, 255, 255, .6);
+        padding-bottom: 100px;
+        background-color: transparent;
         border-radius: 5px;
         color: rgba(83, 83, 83, 1);
         h1, h2, h3, h4, h5, h6 {
@@ -153,7 +152,7 @@ export default {
             margin-top: 20px !important;
         }
         &::-webkit-scrollbar {
-            width: 9px;
+            display: none;
         }
         &::-webkit-scrollbar-thumb {
             background: transparent;
@@ -173,47 +172,33 @@ export default {
 
         &::-webkit-scrollbar-corner {
             display: none;
-            // background: #bfbfbf;
         }
     }
-    .markdown-toc {
-        width: calc(25% - 20px);
-        max-height: 300px;
-        border-width: 0;
-        position: fixed;
-        right: 0;
-        background-color: rgba(255, 255, 255, .6);
-        .catalog {
-                margin: 0;
-                padding-bottom: 10px;
-                font-weight: 600;
-                border-bottom: 1px solid var(--color-gray);
-            }
-        
-        /deep/ .catalog-content {
-            color: var(--font-color);
-            font-weight: inherit;
-            font-weight: 300;
-            font-size: 1rem;
-    
-            a {
+    .catalog {
+        padding-left: 10px;
+        font-size: @catalog-font;
+        height: max-content;
+        align-self: center;
+        justify-self: end;
+        margin-right: 30%;
+        .catalog-container{
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            .listStyle {
                 display: inline-block;
-                font-size: 1.3rem;
-                font-weight: 400;
-                margin-bottom: 8px;
+                height: calc(@catalog-font / 4);
+                background-color: rgba(83, 83, 83, .5);
+                border-radius: 5px;
             }
-
-            .listClass,
-            .linkClass {
+            .catalog-nav {
+                display: inline-block;
+                line-height: 16px;
+                color: rgba(83, 83, 83, 1);
                 list-style: none;
-                text-decoration: none;
-                color: rgba(103, 103, 103, 1);
+                margin: 10px 0;
             }
-            .listClass {
-                padding-left: 20px;
-            }
-    
         }
     }
-   }
+}
 </style>

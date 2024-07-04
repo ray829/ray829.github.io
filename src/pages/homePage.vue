@@ -1,15 +1,15 @@
 <template>
   <div class="homePage">
     <div class="markdown">
-      <el-card v-for="item in mdList" :key="item.time" class="my-record">
-        <img :src="require(`@/assets/images/${item.imgUrl}`)" alt="">
+      <div v-for="item in mdList" :key="item.time" class="my-record">
+        <img :src="require(`@/assets/images/${item.imgUrl}`)" alt="" class="animate__animated">
         <div class="mdBlurb">
           <router-link class="title" :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.title
             }}</router-link>
           <div><i class="iconfont icon-date"></i> 发表于 {{ item.time }} | <i class="iconfont icon-tags"></i> {{ item.tag }}</div>
           <span>{{ item.desc }}</span>
         </div>
-      </el-card>
+      </div>
     </div>
     <div class="user">
       <el-card shadow="hover">
@@ -42,6 +42,8 @@
 
 <script>
 
+import 'animate.css';
+
 export default {
   name: 'CyberloafingHomePage',
 
@@ -70,24 +72,41 @@ export default {
       user_sculpture.style.transform = `${currenttransform} rotate(-0deg)`;
       user_sculpture.style.transition = '1s cubic-bezier(.11,.63,.61,.84)';
     });
+    this.addAnimation();
   },
 
   methods: {
     backHome() {
       this.$router.push('/');
     },
+    addAnimation() {
+      const imgs = document.querySelectorAll('.my-record img');
+      for (let i = 0; i < imgs.length; i++){
+        let self = imgs[i];
+        imgs[i].addEventListener('mouseenter', function () {
+          self.classList.add('animate__headShake');
+        });
+        //mouseleave与mouseout相似，不过mouseleave不会冒泡
+        imgs[i].addEventListener('mouseleave', function () {
+          self.classList.remove('animate__headShake');
+        });
+      }
+    }
   },
 };
 </script>
 
 <style lang="less" scoped>
 .homePage {
+  margin-top: 2vw;
   display: grid;
   grid-template-columns: [c1] 75% [c2] auto [c3];
   column-gap: 20px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  height: 100%;
   .markdown {
     overflow-y: scroll;
-    height: 85vh;
     //滚动条
     &::-webkit-scrollbar {
       width: 9px;
@@ -118,61 +137,60 @@ export default {
     border-radius: 15px;
     border-width: 0px;
     display: grid;
+    grid-template-columns: [c1] 35% [c2] 65% [c3];
+    grid-template-rows: 100%;
     align-items: center;
+    justify-content: center;
     margin-right: 10px;
     margin-bottom: 10px;
-    background-color: rgba(255, 255, 255, .8);
-    /deep/.el-card__body {
-      display: grid;
-      height: 100%;
-      grid-template-columns: [c1] 35% [c2] 60% [c3];
-      grid-template-rows: 100%;
-      align-items: center;
-      justify-content: center;
-      column-gap: 5%;
-      padding: 0;
-      img {
+    overflow-x: visible;
+    img {
         grid-column-start: 1;
         width: 100%;
         height: 100%;
         display: block;
+        border-radius: 20px;
+    }
+    .mdBlurb {
+      grid-column-start: 2;
+      align-self: self-start;
+      color: rgba(103, 103, 103, 1);
+      background-color: rgba(255, 255, 255, .4);
+      display: grid;
+      grid-template-rows: 30% 30% 40%;
+      align-items: center;
+      text-align: center;
+      border-radius: 20px;
+      height: 100%;
+      cursor: default;
+      a {
+        text-decoration: none;
+        color: inherit;
+        font-weight: 900;
+        font-size: 28px;
+        letter-spacing: 1.5px;
+        justify-self: center;
+        margin-top: 5%;
+        transition: transform .2s linear;
+        cursor: pointer;
+        &:hover {
+          transform: scale(1.05);
+        }
       }
-      .mdBlurb {
-        grid-column-start: 2;
+      div {
+        justify-self: center;
+        font-size: 16px;
+        color: rgba(133, 133, 133, 1);
+      }
+      span {
         align-self: self-start;
-        color: rgba(103, 103, 103, 1);
-        padding-right: 5%;
-        display: grid;
-        cursor: default;
-        a {
-          text-decoration: none;
-          color: inherit;
-          font-weight: 900;
-          font-size: 28px;
-          letter-spacing: 1.5px;
-          justify-self: center;
-          margin-top: 10%;
-          margin-bottom: 2%;
-          transition: transform .2s linear;
-          cursor: pointer;
-          &:hover {
-            transform: scale(1.05);
-          }
-        }
-        div {
-          justify-self: center;
-          font-size: 16px;
-          color: rgba(133, 133, 133, .6);
-        }
-        span {
-          margin-top: 4%;
-          font-size: 18px;
-          display: inline-block;
-          overflow: hidden;
-          width: 100%;
-          text-wrap: nowrap;
-          text-overflow: ellipsis;
-        }
+        font-size: 18px;
+        font-weight: 500;
+        display: inline-block;
+        overflow: hidden;
+        width: 100%;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -180,7 +198,7 @@ export default {
     grid-column-start: c2;
     font-size: 1.2rem;
     width: 100%;
-    position: fixed;
+    height: max-content;
     justify-self: right;
     .el-card {
       border-radius: 15px;

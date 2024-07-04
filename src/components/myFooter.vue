@@ -28,5 +28,8 @@ export default {
 .f-main {
   line-height: 30px;
   text-align: center;
+  width: 100%;
+  font: 600 1.2rem '新宋体','楷体';
+  color: rgb(46, 45, 45);
 }
 </style>

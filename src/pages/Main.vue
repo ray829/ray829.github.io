@@ -7,22 +7,17 @@
       <el-main>
         <router-view class="route"></router-view>
       </el-main>
-      <el-footer height="30px">
-        <myFooter />
-      </el-footer>
     </el-container>
   </div>
 </template>
 
 <script>
 import myHeader from "@/components/header";
-import myFooter from "@/components/footer";
 
 export default {
   name: "CyberloafingMain",
   components: {
     myHeader,
-    myFooter,
   },
 
   data() {
@@ -37,6 +32,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.el-container {
+  background-image: url("@/assets/images/maoyu.jpeg");
+  background-attachment: fixed;
+  background-size: cover;
+}
 .el-header {
   font-size: 1.1rem;
   position: fixed;
@@ -44,47 +44,21 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(255, 255, 255, .3);
+  background-color: rgba(255, 255, 255, .7);
 }
 
 .el-main {
-  background-image: url("@/assets/images/maoyu.jpeg");
-  background-attachment: fixed;
-  background-size: cover;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  &::after {
-    position: absolute;
-    position: fixed;
-    top: 0;
-    left: 0;
-    content: '';
-    background-color: rgba(255, 254, 249, .4);
-    background-attachment: fixed;
-    width: 100%;
-    min-width: 1200px;
-    height: 100%;
-  }
-  .route {
-    font-size: 1.4rem;
-    position: absolute;
-    width: 1200px;
-    top: 5vw;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-  }
-}
-.el-footer {
-  position: fixed;
-  z-index: 10;
+  height: calc(100vh - 50px);
+  margin-top: 50px;
+  padding: 0;
+  // overflow: hidden;
+  background-color: rgba(255, 254, 249, .4);
+  font-size: 1.4rem;
   width: 100%;
-  bottom: 0;
-  background-color: transparent;
-  text-align: center;
-  align-items: center;
-  font: 600 1.2rem '新宋体','楷体';
-  color: rgb(46, 45, 45);
-} 
+  .route {
+    width: 1200px;
+    margin: 0 auto;
+  }
+  
+}
 </style>
