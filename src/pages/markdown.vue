@@ -5,7 +5,7 @@
             <div class="catalog">
                 <div class="catalog-container" :id=item.content v-for="(item, index) in catalogContent" :key="index" @click="handleAnchor(item)">
                     <div :class="item.tag" class="listStyle"></div>
-                    <div class="catalog-nav">{{ item.content }}</div>
+                    <div class="catalog-nav" :class="{'navFocus': index === 0}">{{ item.content }}</div>
                 </div>
             </div>
         </div>
@@ -15,6 +15,8 @@
 
 <script>
 import MarkdownIt from "markdown-it";
+// eslint-disable-next-line no-unused-vars
+import {debounce} from "../utils/tool.js";
 // import myFooter from "@/components/myFooter.vue";
 import 'github-markdown-css';
 
@@ -25,7 +27,6 @@ export default {
         return {
             mdContent: '',
             catalogContent: [],
-            mdtitle: [],
         };
     },
 
@@ -35,17 +36,20 @@ export default {
 
     },
     created() {
-    },
-    mounted() {
         const mdName = this.$route.query.mdName;
         const mdUrl = '/posts/' + mdName + '.md';
         this.loadFile(mdUrl)
             .then(data => {
                 this.renderMarkdown(data);
             })
+            .then(() => {
+                this.handleMdScroll();
+            })
             .catch(error => {
                 throw error;
             })
+    },
+    mounted() {
     },
 
     methods: {
@@ -67,7 +71,6 @@ export default {
             });
         },
         renderMarkdown(mymd) {
-            // const that = this;
             const md = new MarkdownIt({
                 html: true, //源码中启用HTML标签
                 xhtmlOut: true, //使用‘/’来闭合单标签
@@ -102,14 +105,37 @@ export default {
             navTitle.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
-            })
+            });
+        },
+        navAndTitle() {
+            
+        },
+        handleMdScroll() {
+            const md = document.querySelector('.markdown-body');
+            let titleOffsetTops = [];
+            for (let item of this.catalogContent) {
+                let mdtitle = document.querySelector(`.markdown-body #${item.content}`);
+                titleOffsetTops.push(mdtitle.offsetTop);
+            }
+            md.addEventListener('scroll', debounce(() => {
+                let mdScrollTop = md.scrollTop;
+                for (let i = 0; i < titleOffsetTops.length; i++){
+                    //在标题距离容器顶部误差在5px以内
+                    if (Math.abs(mdScrollTop - titleOffsetTops[i]) < 5) {
+                        let target = document.querySelector(`.catalog #${this.catalogContent[i].content} .catalog-nav`);
+                        // let navFocus = document.querySelector('.navFocus');
+                        // navFocus.classList.remove('navFocus');
+                        target.classList.add('navFocus');
+                    }
+                }
+             }, 0));
         }
     }
 };
 </script>
 
 <style lang="less" scoped>
-    @catalog-font: 16px;
+@catalog-font: 16px;
     .h1 {
         width: 22px;
         margin-right: 8px;
@@ -132,6 +158,7 @@ export default {
         grid-column: 2/3;
         width: 100%;
         height: 100%;
+        position: relative; //这里加定位，是为了更方便的处理offetTop值
         justify-self: center;
         box-sizing: border-box;
         overflow: scroll;
@@ -197,6 +224,10 @@ export default {
                 color: rgba(83, 83, 83, 1);
                 list-style: none;
                 margin: 10px 0;
+                opacity: 0;
+            }
+            .navFocus {
+                opacity: 1;
             }
         }
     }
