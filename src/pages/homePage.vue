@@ -4,8 +4,7 @@
       <div v-for="item in mdList" :key="item.time" class="my-record">
         <img :src="require(`@/assets/images/${item.imgUrl}`)" alt="" class="animate__animated">
         <div class="mdBlurb">
-          <router-link class="title" :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.title
-            }}</router-link>
+          <router-link class="title" :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.title }}</router-link>
           <div><i class="iconfont icon-date"></i> 发表于 {{ item.time }} | <i class="iconfont icon-tags"></i> {{ item.tag }}</div>
           <span>{{ item.desc }}</span>
         </div>
@@ -145,11 +144,11 @@ export default {
     margin-bottom: 10px;
     overflow-x: visible;
     img {
-        grid-column-start: 1;
-        width: 100%;
-        height: 100%;
-        display: block;
-        border-radius: 20px;
+      grid-column-start: 1;
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 20px;
     }
     .mdBlurb {
       grid-column-start: 2;

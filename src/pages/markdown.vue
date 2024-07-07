@@ -123,8 +123,8 @@ export default {
                     //在标题距离容器顶部误差在5px以内
                     if (Math.abs(mdScrollTop - titleOffsetTops[i]) < 5) {
                         let target = document.querySelector(`.catalog #${this.catalogContent[i].content} .catalog-nav`);
-                        // let navFocus = document.querySelector('.navFocus');
-                        // navFocus.classList.remove('navFocus');
+                        let navFocus = document.querySelector('.navFocus');
+                        navFocus.classList.remove('navFocus');
                         target.classList.add('navFocus');
                     }
                 }
@@ -225,6 +225,10 @@ export default {
                 list-style: none;
                 margin: 10px 0;
                 opacity: 0;
+                transition: opacity .5s linear;
+                &:hover {
+                    opacity: .5;
+                }
             }
             .navFocus {
                 opacity: 1;
