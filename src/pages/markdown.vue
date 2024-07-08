@@ -107,13 +107,10 @@ export default {
                 block: 'start',
             });
         },
-        navAndTitle() {
-            
-        },
         handleMdScroll() {
             const md = document.querySelector('.markdown-body');
             let titleOffsetTops = [];
-            let tag = -1; // 记录当前内容所在第几个区域来减少无用的dom获取操作
+            let tag = 0; // 记录当前内容所在第几个区域来减少无用的dom获取操作
             for (let item of this.catalogContent) {
                 let mdtitle = document.querySelector(`.markdown-body #${item.content}`);
                 titleOffsetTops.push(mdtitle.offsetTop);
@@ -121,15 +118,12 @@ export default {
             md.addEventListener('scroll', () => {
                 let mdScrollTop = md.scrollTop;
                 for (let i = 0; i < titleOffsetTops.length-1; i++){
-                    if (tag !== i && mdScrollTop >= titleOffsetTops[i] && mdScrollTop < titleOffsetTops[i + 1]) {
+                    if ( tag !== i && mdScrollTop >= titleOffsetTops[i] && mdScrollTop < titleOffsetTops[i + 1]) {
                         let target = document.querySelector(`.catalog #${this.catalogContent[i].content} .catalog-nav`);
                         let navFocus = document.querySelector('.navFocus');
                         navFocus.classList.remove('navFocus');
                         target.classList.add('navFocus');
                         tag = i;
-                        // console.log(tag);
-                    } else if (md.scrollHeight - (md.clientHeight + mdScrollTop) < 1 ) {
-                        console.log(tag);
                     }
                 }
              });
