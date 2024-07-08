@@ -113,22 +113,26 @@ export default {
         handleMdScroll() {
             const md = document.querySelector('.markdown-body');
             let titleOffsetTops = [];
+            let tag = -1; // 记录当前内容所在第几个区域来减少无用的dom获取操作
             for (let item of this.catalogContent) {
                 let mdtitle = document.querySelector(`.markdown-body #${item.content}`);
                 titleOffsetTops.push(mdtitle.offsetTop);
             }
-            md.addEventListener('scroll', debounce(() => {
+            md.addEventListener('scroll', () => {
                 let mdScrollTop = md.scrollTop;
-                for (let i = 0; i < titleOffsetTops.length; i++){
-                    //在标题距离容器顶部误差在5px以内
-                    if (Math.abs(mdScrollTop - titleOffsetTops[i]) < 5) {
+                for (let i = 0; i < titleOffsetTops.length-1; i++){
+                    if (tag !== i && mdScrollTop >= titleOffsetTops[i] && mdScrollTop < titleOffsetTops[i + 1]) {
                         let target = document.querySelector(`.catalog #${this.catalogContent[i].content} .catalog-nav`);
                         let navFocus = document.querySelector('.navFocus');
                         navFocus.classList.remove('navFocus');
                         target.classList.add('navFocus');
+                        tag = i;
+                        // console.log(tag);
+                    } else if (md.scrollHeight - (md.clientHeight + mdScrollTop) < 1 ) {
+                        console.log(tag);
                     }
                 }
-             }, 0));
+             });
         }
     }
 };
@@ -225,7 +229,7 @@ export default {
                 list-style: none;
                 margin: 10px 0;
                 opacity: 0;
-                transition: opacity .5s linear;
+                transition: opacity .3s linear;
                 &:hover {
                     opacity: .5;
                 }
