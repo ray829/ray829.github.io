@@ -18,7 +18,7 @@
 import MarkdownIt from "markdown-it";
 // eslint-disable-next-line no-unused-vars
 import { debounce } from "../utils/tool.js";
-import { myWave } from "@/components/wave.vue";
+import  myWave  from "@/components/myWave.vue";
 // import myFooter from "@/components/myFooter.vue";
 import 'github-markdown-css';
 
@@ -233,18 +233,19 @@ export default {
             }
             .catalog-nav {
                 display: inline-block;
-                line-height: 16px;
-                color: rgba(83, 83, 83, 1);
+                line-height: 17px;
+                color: rgba(83, 83, 83, .8);
                 list-style: none;
                 margin: 10px 0;
                 // opacity: 0;
                 transition: opacity .2s linear;
                 &:hover {
-                    color: rgb(188, 219, 245);
+                    color: #36282b;
                 }
             }
             .navFocus {
-                color: rgba(65, 166, 249, 1);
+                color: #36282b;
+                transform: scale(1.1);
             }
         }
     }
