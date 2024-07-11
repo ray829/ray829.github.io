@@ -1,5 +1,6 @@
 <template>
     <div style="height: 100%; padding-top: 50px; box-sizing: border-box;">
+        <myWave style="display: block; width: 100%; height: 50px"></myWave>
         <div class="md">
             <div class="markdown-body" v-highlight v-html="mdContent"></div>    
             <div class="catalog">
@@ -16,7 +17,8 @@
 <script>
 import MarkdownIt from "markdown-it";
 // eslint-disable-next-line no-unused-vars
-import {debounce} from "../utils/tool.js";
+import { debounce } from "../utils/tool.js";
+import { myWave } from "@/components/wave.vue";
 // import myFooter from "@/components/myFooter.vue";
 import 'github-markdown-css';
 
@@ -30,7 +32,7 @@ export default {
         };
     },
 
-    // components: {myFooter},
+    components: { myWave },
 
     computed: {
 
@@ -107,25 +109,39 @@ export default {
                 block: 'start',
             });
         },
+        navClassHandle(val) {
+            let target = document.querySelector(`.catalog #${this.catalogContent[val].content} .catalog-nav`);
+            let navFocus = document.querySelector('.navFocus');
+            navFocus.classList.remove('navFocus');
+            target.classList.add('navFocus');
+        },
         handleMdScroll() {
             const md = document.querySelector('.markdown-body');
             let titleOffsetTops = [];
             let tag = 0; // 记录当前内容所在第几个区域来减少无用的dom获取操作
+            let scrollTopPre = 0; //记录上一次滚动长度,以判断当前向上还是向下滚动
             for (let item of this.catalogContent) {
                 let mdtitle = document.querySelector(`.markdown-body #${item.content}`);
                 titleOffsetTops.push(mdtitle.offsetTop);
             }
+            let len = titleOffsetTops.length - 1;
             md.addEventListener('scroll', () => {
                 let mdScrollTop = md.scrollTop;
-                for (let i = 0; i < titleOffsetTops.length-1; i++){
-                    if ( tag !== i && mdScrollTop >= titleOffsetTops[i] && mdScrollTop < titleOffsetTops[i + 1]) {
-                        let target = document.querySelector(`.catalog #${this.catalogContent[i].content} .catalog-nav`);
-                        let navFocus = document.querySelector('.navFocus');
-                        navFocus.classList.remove('navFocus');
-                        target.classList.add('navFocus');
-                        tag = i;
-                    }
+                //判断是否滚动到最底部
+                if (mdScrollTop > (md.scrollHeight - md.clientHeight - 2) && tag !== len) { 
+                    tag = len;
+                    console.log(tag);
+                    this.navClassHandle(tag);
+                } else if (mdScrollTop >= scrollTopPre && mdScrollTop >= titleOffsetTops[tag+1]) { //若向下滚动且超过当前区域下边界
+                    tag++;
+                    console.log(tag);
+                    this.navClassHandle(tag);
+                } else if (mdScrollTop < scrollTopPre && mdScrollTop < titleOffsetTops[tag]) { //若向上滚动且超过当前区域上边界
+                    tag = --tag < 0 ? 0 : tag;
+                    console.log(tag);
+                    this.navClassHandle(tag);
                 }
+                scrollTopPre = mdScrollTop;
              });
         }
     }
@@ -148,7 +164,6 @@ export default {
     }
    .md {
     display: grid;
-    background-color: rgba(255, 255, 255, .6);
     width: 100%;
     height: 100%;
     grid-template-columns: [c1] 20% [c2] 60% [c3] 20% [c4];
@@ -164,7 +179,7 @@ export default {
         padding-bottom: 100px;
         background-color: transparent;
         border-radius: 5px;
-        color: rgba(83, 83, 83, 1);
+        color: rgb(56, 56, 56);
         h1, h2, h3, h4, h5, h6 {
             border-bottom-width: 0;
             cursor: default;
@@ -222,14 +237,14 @@ export default {
                 color: rgba(83, 83, 83, 1);
                 list-style: none;
                 margin: 10px 0;
-                opacity: 0;
-                transition: opacity .3s linear;
+                // opacity: 0;
+                transition: opacity .2s linear;
                 &:hover {
-                    opacity: .5;
+                    color: rgb(188, 219, 245);
                 }
             }
             .navFocus {
-                opacity: 1;
+                color: rgba(65, 166, 249, 1);
             }
         }
     }
