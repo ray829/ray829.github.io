@@ -1,6 +1,5 @@
 <template>
-    <div style="height: 100%; padding-top: 50px; box-sizing: border-box;">
-        <myWave style="display: block; width: 100%; height: 50px"></myWave>
+    <div style="height: 100%; box-sizing: border-box;">
         <div class="md">
             <div class="markdown-body" v-highlight v-html="mdContent"></div>    
             <div class="catalog">
@@ -18,7 +17,6 @@
 import MarkdownIt from "markdown-it";
 // eslint-disable-next-line no-unused-vars
 import { debounce } from "../utils/tool.js";
-import  myWave  from "@/components/myWave.vue";
 // import myFooter from "@/components/myFooter.vue";
 import 'github-markdown-css';
 
@@ -31,9 +29,6 @@ export default {
             catalogContent: [],
         };
     },
-
-    components: { myWave },
-
     computed: {
 
     },

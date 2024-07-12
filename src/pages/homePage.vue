@@ -4,8 +4,10 @@
       <div v-for="item in mdList" :key="item.time" class="my-record">
         <img :src="require(`@/assets/images/${item.imgUrl}`)" alt="" class="animate__animated">
         <div class="mdBlurb">
-          <router-link class="title" :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.title }}</router-link>
-          <div><i class="iconfont icon-date"></i> 发表于 {{ item.time }} | <i class="iconfont icon-tags"></i> {{ item.tag }}</div>
+          <router-link class="title" :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.title
+            }}</router-link>
+          <div><i class="iconfont icon-date"></i> 发表于 {{ item.time }} | <i class="iconfont icon-tags"></i> {{ item.tag
+            }}</div>
           <span>{{ item.desc }}</span>
         </div>
       </div>
@@ -29,10 +31,10 @@
           <span class="entrance_text">Go Back</span>
         </div>
         <ul class="home_info">
-          <li><i class="iconfont icon-bilibili"></i></li>
+          <li><a class="iconfont icon-bilibili" href="https://space.bilibili.com/430081185"></a></li>
           <li><i class="iconfont icon-weixin"></i></li>
           <li><i class="iconfont icon-QQ-circle-fill"></i></li>
-          <li><i class="iconfont icon-github-fill"></i></li>
+          <li><a class="iconfont icon-github-fill" href="https://github.com/ray829"></a></li>
         </ul>
       </el-card>
     </div>
@@ -297,12 +299,43 @@ export default {
         li {
           list-style-type: none;
         }
-        i {
+        a:visited {
+          color: inherit;
+          text-decoration: none;
+        }
+        i, a {
           font-size: 2.5rem;
           cursor: pointer;
+          text-decoration: none;
           &:hover {
             color:var(--font-color);
           }
+        }
+        .icon-weixin, .icon-QQ-circle-fill {
+          position: relative;
+          &::after {
+              content: '';
+              display: none;
+              background-size: cover;
+              position: absolute;
+              z-index: 2;
+              width: 100px;
+              height: 100px;
+              padding:1px;
+              background-color: rgba(255, 255, 255, .7);
+              top: -105px;
+              border-radius: 10px;
+              left: calc(-50px + 50%);
+          }
+          &:hover::after {
+            display: block;
+          }
+        }
+        .icon-weixin::after {
+          background-image: url('../assets/images/weixin.jpg');
+        }
+        .icon-QQ-circle-fill::after {
+          background-image: url('../assets/images/qq.jpg');
         }
       }
     }
