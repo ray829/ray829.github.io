@@ -235,11 +235,11 @@ export default {
                 // opacity: 0;
                 transition: opacity .2s linear;
                 &:hover {
-                    color: #36282b;
+                    color: rgb(4, 138, 247);
                 }
             }
             .navFocus {
-                color: #36282b;
+                color: rgb(4, 138, 247);
                 transform: scale(1.1);
             }
         }

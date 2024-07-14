@@ -4,11 +4,11 @@
       <globalLoading />
     </div>
     <div v-show="!isLoading" style="height: 100%;">
-      <div v-show="isShow" class="principal-sheet light">
+      <div v-show="isShow == 0" class="principal-sheet light">
         <decoration />
         <div class="web-font">只想摸鱼的博客</div>
         <div class="myTyper">
-          <mytyper />
+          <mytyper/>
         </div>
         <div class="navigation">
           <router-link to="/home">首页</router-link>
@@ -18,7 +18,8 @@
           <span @click="switchTheme">切换</span>
         </div>
       </div>
-      <myMain v-show="!isShow" />
+      <myMain v-show="isShow == 1" />
+      <NotFound v-show="isShow == 2"></NotFound>
     </div>
   </div>
 </template>
@@ -28,6 +29,7 @@ import myMain from "./pages/Main";
 import mytyper from "@/components/typer";
 import decoration from "@/components/myDecoration";
 import globalLoading from "@/components/globalLoading.vue";
+import NotFound from "./pages/NotFound.vue";
 
 export default {
   name: "App",
@@ -35,11 +37,12 @@ export default {
     myMain,
     mytyper,
     decoration,
-    globalLoading
+    globalLoading,
+    NotFound
   },
   data() {
     return {
-      isShow: true,
+      isShow: 0,
       Theme: true,
       isLoading: true,
       bacImgUrl: require('./assets/images/20240411194441.png')
@@ -50,9 +53,11 @@ export default {
       deep: true,
       handler(to) {
         if (to.path === "/") {
-          this.isShow = true;
+          this.isShow = 0;
+        } else if(to.fullPath === "/404") {
+          this.isShow = 2;
         } else {
-          this.isShow = false;
+          this.isShow = 1;
         }
         sessionStorage.setItem("isShow", JSON.stringify(this.isShow));
         sessionStorage.setItem("routes", JSON.stringify(this.$route.fullPath));
@@ -61,7 +66,7 @@ export default {
   },
   created() {
     if (sessionStorage.getItem("routes")) {
-      this.isShow = JSON.parse(sessionStorage.getItem("isShow"));
+      this.isShow = parseInt(JSON.parse(sessionStorage.getItem("isShow")));
       // App主组件中定义，在子组件中刷新会重新调用该组件，从而导致markdown中传递的query参数会在刷新页面时丢失
       this.$router.push(JSON.parse(sessionStorage.getItem("routes")));
     }
@@ -109,6 +114,15 @@ export default {
   --color-gray: rgb(179, 182, 183);
   --scroll-hover-color: rgba(108, 108, 108, 1);
   background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  --c0: #71a1ff;
+  --c1: #4d85f6;
+  --c2: #3b72e2;
+  --c3: #336de2;
+  --c4: #2151af;
+  --c5: #244483;
+  --c6: #103071;
+  --clr: 1; /* change color from 1 to 12 */
+  --hue: calc(30deg - (30deg * var(--clr))); 
 }
 html,
 body,

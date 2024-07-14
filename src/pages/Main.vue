@@ -52,7 +52,7 @@ export default {
   margin-top: 50px;
   padding: 0;
   // overflow: hidden;
-  background-color: rgba(255, 254, 249, .6);
+  background-color: rgba(255, 254, 249, .7);
   font-size: 1.4rem;
   width: 100%;
   .route {

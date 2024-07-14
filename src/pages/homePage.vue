@@ -306,6 +306,7 @@ export default {
         i, a {
           font-size: 2.5rem;
           cursor: pointer;
+          color: inherit;
           text-decoration: none;
           &:hover {
             color:var(--font-color);

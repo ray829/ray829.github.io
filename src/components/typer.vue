@@ -17,24 +17,11 @@ export default {
   computed: {
   },
 
-  watch: {
-    $route: {
-      deep: true,
-      handler(to) {
-        if (to.path !== '/') {
-          clearTimeout(this.timerId);
-        } else {
-          this.handleTyper();
-        }
-      }
-    }
-  },
-
   mounted() {
     this.handleTyper();
     document.addEventListener('visibilitychange', () => {
       let state = document.visibilityState;
-      // console.log(state);
+      console.log(state);
       if (state === 'hidden') {
         clearTimeout(this.timerId);
       } else {
@@ -45,6 +32,7 @@ export default {
 
   methods: {
     handleTyper() {
+      console.log(11);
       let container = document.querySelector('.typercontainer');
       let str_ = "且借人间二两墨，一笔相思一笔错";
       // 定义数组索引
@@ -57,26 +45,9 @@ export default {
       // let waitDalay = 3000;
 
       let changeText = () => {
-          container.textContent = str_.substring(0,charIndex);
-          delay = defaultDelay;
-          charIndex++;
-          // if(!isDelete){
-              // if(charIndex > str_.length){
-              //     // 当charIndex已经大于字符的长度的时候，表示应该执行删除动画了
-              //     isDelete = true; 
-              //     delay = waitDalay;
-              // }
-          // }else{
-          //     delay = defaultDelay;
-          //     charIndex --;
-          //     if(charIndex < 1){
-          //         isDelete = false;
-          //         index ++;
-          //         if(index >= str_.length){
-          //           index = 0;
-          //         }
-          //     }
-          // }
+        container.textContent = str_.substring(0,charIndex);
+        delay = defaultDelay;
+        charIndex++;
         clearTimeout(this.timerId);
         this.timerId = setTimeout(changeText, delay);
         if (charIndex > str_.length) {
@@ -88,6 +59,11 @@ export default {
       changeText();
     },
   },
+  beforeDestroy() {
+    if (this.timerId) {
+      clearTimeout(this.timerId);
+    }
+  }
 };
 </script>
 
