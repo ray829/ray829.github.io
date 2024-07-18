@@ -99,7 +99,6 @@ export default {
 
 <style lang="less" scoped>
 .homePage {
-  margin-top: 2vw;
   display: grid;
   grid-template-columns: [c1] 75% [c2] auto [c3];
   column-gap: 20px;
