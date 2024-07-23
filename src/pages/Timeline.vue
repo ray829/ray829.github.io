@@ -1,7 +1,6 @@
 <template>
   <div class="mytime">
     <section class="timeline">
-      <!-- <img id="timeImg" src="https://s1.imagehub.cc/images/2024/07/18/446c66815455a582ac99d8a7d34ea71a.jpeg" alt=""> -->
       <div class="container">
         <!--     ITEM 1  -->
         <div class="timeline-item">
@@ -102,6 +101,16 @@ h1 {
 
 .timeline {
   position: relative;
+}
+
+.title {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 56px;
+  font-weight: 900;
+  background-image: url('');
 }
 
 .timeline::before {

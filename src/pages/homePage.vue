@@ -2,7 +2,7 @@
   <div class="homePage">
     <div class="markdown">
       <div v-for="item in mdList" :key="item.time" class="my-record">
-        <img :src="require(`@/assets/images/${item.imgUrl}`)" alt="" class="animate__animated">
+        <img :src=item.imgUrl alt="" class="animate__animated">
         <div class="mdBlurb">
           <router-link class="title" :to="{path: '/markdown', query: {mdName: item.name}}">{{ item.title
             }}</router-link>
