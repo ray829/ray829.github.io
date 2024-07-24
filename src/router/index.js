@@ -5,7 +5,6 @@ import App from "@/App.vue";
 import homePage from "@/pages/homePage.vue";
 // import Photos from "@/pages/Photos.vue";
 import dayLog from '@/pages/dayLog';
-import about from "@/pages/about.vue";
 import Timeline from '@/pages/Timeline';
 import markdown from '@/pages/markdown';
 import NotFound from '@/pages/NotFound';
@@ -36,12 +35,8 @@ const routes = [
     {
         path: '/daylog',
         name: 'daylog',
+        redirect: '/404',
         component: dayLog,
-    },
-    {
-        path: '/about',
-        name: 'about',
-        component: about,
     },
     {
         path: '/timeline',

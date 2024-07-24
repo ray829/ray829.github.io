@@ -1,6 +1,6 @@
 # Git的使用日常
 
-## 1、操作流程
+## 操作流程
 
 ![git操作通用流程](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/4/25/162fcc0987bf1c0a~tplv-t2oaga2asx-jj-mark:3024:0:0:0:q75.awebp#?w=1172&h=340&s=18854&e=png&a=1&b=acd8e5)
 
@@ -12,7 +12,7 @@
 + 本地仓库(repsitory)：使用commit命令可以将暂存区中的文件添加到本地仓库中
 + 远程仓库(remote)：不是在本地仓库中，项目代码在远程git服务器上，比如项目放在github上，就是一个远程仓库，通常使用clone命令将远程仓库拷贝到本地仓库中，开发后推送到远程仓库中即可
 
-## 2、git配置
+## git配置
 
 **第一次使用git，配置用户信息：**
 
@@ -36,7 +36,7 @@ git config --global --list
 git config --system --list
 ```
 
-## 3、 工作区上的操作命令
+## 工作区上的操作命令
 
 1. **新建仓库**
    + 将工作区中的项目文件使用git进行管理，即创建一个新的本地仓库：`git init`
@@ -59,7 +59,7 @@ git config --system --list
    + 应用最新的储藏：`git stash apply`，如果想应用更早的储藏：`git stash apply stash@{2}`；重新应用被暂存的变更，需要加上`--index`参数：`git stash apply --index`;
    + 使用apply命令只是应用储藏，而内容仍然还在栈上，需要移除指定的储藏：`git stash drop stash{0}`；如果使用pop命令不仅可以重新应用储藏，还可以立刻从堆栈中清除：`git stash pop`
 
-## 4、分支操作
+## 分支操作
 
 1. 创建分支并跟踪远程分支
 
@@ -87,7 +87,7 @@ git config --system --list
 
    注：rebase操作应该遵循的原则是：**一旦分支中的提交对象发布到公共仓库，就千万不要对该分支进行rebase操作**；
 
-## 5、提交文件
+## 提交文件
 
 1. 将暂存区中的文件提交到本地仓库中，即打上新版本：`git commit -m "commit_info"`
 2. 将所有已经使用git管理过的文件暂存后一并提交，跳过add到暂存区的过程：`git commit -a -m "commit_info"`

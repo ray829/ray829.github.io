@@ -1,6 +1,6 @@
 # Commonjs 和 Es Module
 
-## 一 前言
+## 前言
 
 今天我们来深度分析一下 `Commonjs` 和 `Es Module`，希望通过本文的学习，能够让大家彻底明白 `Commonjs` 和 `Es Module` 原理，能够一次性搞定面试中遇到的大部分有关 `Commonjs` 和 `Es Module` 的问题。
 
@@ -15,7 +15,7 @@
 - 关于 `import()` 的动态引入 ？
 - Es Module 如何改变模块下的私有变量 ？
 
-## 二 模块化
+## 模块化
 
 早期 JavaScript 开发很容易存在**全局污染**和**依赖管理**混乱问题。这些问题在多人开发前端应用的情况下变得更加棘手。我这里例举一个很常见的场景：
 
@@ -79,7 +79,7 @@ function name(){
 
 所以就需要模块化来解决上述的问题，今天我们就重点讲解一下前端模块化的两个重要方案：**Commonjs** 和 **Es Module**
 
-## 三 Commonjs
+## Commonjs
 
 `Commonjs` 的提出，弥补 Javascript 对于模块化，没有统一标准的缺陷。nodejs 借鉴了 `Commonjs` 的 Module ，实现了良好的模块化管理。
 
@@ -89,7 +89,7 @@ function name(){
 - `Browserify` 是 CommonJS 在浏览器中的一种实现；
 - `webpack` 打包工具对 CommonJS 的支持和转换；也就是前端应用也可以在编译之前，尽情使用 CommonJS 进行开发。
 
-### 1 commonjs 使用与原理
+### commonjs 使用与原理
 
 在使用  规范下，有几个显著的特点。
 
@@ -190,7 +190,7 @@ const modulefunction = wrapper(`
 
 到此为止，完成了整个模块执行的原理。接下来我们来分析以下 require 文件加载的流程。
 
-### 2 require 文件加载流程
+### require 文件加载流程
 
 上述说了 commonjs 规范大致的实现原理，接下来我们分析一下， `require` 如何进行文件的加载的。
 
@@ -233,7 +233,7 @@ const crypto =  require('crypto-js')   // ③第三方自定义模块
 - 沿着路径向上递归，直到根目录下的 `node_modules` 目录。
 - 在查找过程中，会找 `package.json` 下 main 属性指向的文件，如果没有  `package.json` ，在 node 环境下会以此查找 `index.js` ，`index.json` ，`index.node`。
 
-### 3 require 模块引入与处理
+### require 模块引入与处理
 
 CommonJS 模块同步加载并执行模块文件，CommonJS 模块在执行阶段分析模块依赖，采用**深度优先遍历**（depth-first traversal），执行顺序是父 -> 子 -> 父；
 
@@ -382,7 +382,7 @@ module.exports = function(){
 
 我们注意到 a.js 是用 `exports.say` 方式导出的，如果 a.js 用 module.exports 结果会有所不同。至于有什么不同，为什么？我接下来会讲到。
 
-### 4 require 动态加载
+### require 动态加载
 
 上述我们讲了 `require` 查找文件和加载流程。接下来介绍 `commonjs` 规范下的 require 的另外一个特性——**动态加载**。
 
@@ -410,7 +410,7 @@ a.say()
 
 require 本质上就是一个函数，那么函数可以在任意上下文中执行，来自由地加载其他模块的属性方法。
 
-### 5 exports 和 module.exports
+### exports 和 module.exports
 
 系统分析完 `require` ，接下来我们分析一下，`exports` 和 `module.exports`，首先看一下两个的用法。
 
@@ -534,7 +534,7 @@ module.exports = function(){} //导出方法
 
 答：`module.exports` 当导出一些函数等非对象属性的时候，也有一些风险，就比如循环引用的情况下。对象会保留相同的内存地址，就算一些属性是后绑定的，也能间接通过异步形式访问到。但是如果 module.exports 为一个非对象其他属性类型，在循环引用的时候，就容易造成属性丢失的情况发生了。
 
-## 四 Es Module
+## Es Module
 
 `Nodejs` 借鉴了 `Commonjs` 实现了模块化 ，从 `ES6` 开始， `JavaScript` 才真正意义上有自己的模块化规范，
 
@@ -683,7 +683,7 @@ const promise = import('module')
 
 接下来我们重点分析一下 ES6 module 一些重要特性。
 
-#### 1 静态语法
+#### 静态语法
 
 ES6 module 的引入和导出是静态的，`import` 会自动提升到代码的顶层 ，`import` , `export` 不能放在块级作用域或条件语句中。
 
@@ -715,7 +715,7 @@ let name = 'Export'
 import 'default' + name from 'module'
 ```
 
-#### 2 执行特性
+#### 执行特性
 
 ES6 module 和 Common.js 一样，对于相同的 js 文件，会保存静态属性。
 
@@ -754,7 +754,7 @@ export default function sayhello(){
 - `main.js` 和 `a.js` 都引用了 `b.js` 模块，但是 b 模块也只加载了一次。
 - 执行顺序是子 -> 父
 
-#### 3 导出绑定
+#### 导出绑定
 
 **不能修改import导入的属性**
 
@@ -888,7 +888,7 @@ addNumber()
 
 - 如上 `a.js` 中暴露两个方法，`addNumber`和 `delNumber`，但是整个应用中，只用到了 `addNumber`，那么构建打包的时候，`delNumber`将作为没有引用的方法，不被打包进来。
 
-## 五 Commonjs 和 Es Module 总结
+## Commonjs 和 Es Module 总结
 
 接下来贯穿全文，讲一下 `Commonjs` 和 `Es Module` 的特性。
 

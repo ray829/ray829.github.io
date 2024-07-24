@@ -8,13 +8,13 @@
         <decoration />
         <div class="web-font">只想摸鱼的博客</div>
         <div class="myTyper">
-          <mytyper/>
+          <mytyper />
         </div>
         <div class="navigation">
           <router-link to="/home">首页</router-link>
           <router-link to="/photo">相册</router-link>
           <router-link to="/daylog">说说</router-link>
-          <router-link to="/about">档案</router-link>
+          <router-link to="/timeline">时间轴</router-link>
           <span @click="switchTheme">切换</span>
         </div>
       </div>

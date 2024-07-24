@@ -188,7 +188,8 @@ export default {
         font-weight: 500;
         display: inline-block;
         overflow: hidden;
-        width: 100%;
+        justify-self: center;
+        width: 90%;
         text-wrap: nowrap;
         text-overflow: ellipsis;
       }

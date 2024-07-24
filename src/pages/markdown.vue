@@ -1,12 +1,14 @@
 <template>
     <div style="height: 100%; box-sizing: border-box;">
         <div class="md">
-            <div class="markdown-body" v-highlight v-html="mdContent"></div>    
+            <div class="markdown-body" v-highlight v-html="mdContent" ref="markdownBody"></div>
             <div class="catalog">
-                <div class="catalog-container" :id=item.content v-for="(item, index) in catalogContent" :key="index" @click="handleAnchor(item)">
+                <div class="catalog-container" :id="item.id" v-for="(item, index) in catalogContent" :key="index"
+                    @click="handleAnchor(item.id)">
                     <div :class="item.tag" class="listStyle"></div>
-                    <div class="catalog-nav" :class="{'navFocus': index === 0}">{{ item.content }}</div>
+                    <div class="catalog-nav" :ref=item.id :class="{'navFocus': index === 0}">{{ item.content }}</div>
                 </div>
+                <i class="iconfont icon-chevron_down"></i>
             </div>
         </div>
         <!-- <myFooter></myFooter> -->
@@ -47,9 +49,16 @@ export default {
             })
     },
     mounted() {
+
     },
 
     methods: {
+        genID(length) {
+            if (length < 3) {
+                console.warn('The ID length is too short！');
+            }
+            return 'md' + Number(Date.now() + Math.random().toString().slice(3, length)).toString(36);
+        },
         loadFile(filePath) {
             return fetch(filePath)
             .then(response => {
@@ -73,11 +82,13 @@ export default {
                 xhtmlOut: true, //使用‘/’来闭合单标签
                 linkify: true //将类似URL的文本自动转换为链接
             });
+            const _this = this;
             // eslint-disable-next-line no-unused-vars
             md.renderer.rules.heading_open = function (tokens, idx, options, env, self) {
                 let tag = tokens[idx].tag;
                 if (/^h[1-6]$/.test(tag)) {
-                    let id = tokens[idx + 1].content;
+                    // let id = tokens[idx + 1].content;
+                    let id = _this.genID(5);
                     tokens[idx].attrPush(['id', id]);
                 }
                 return self.renderToken(tokens, idx, options);
@@ -87,38 +98,39 @@ export default {
             const result = md.render(mymd);
             let nav = result.match(re);
             nav.map((val, ind) => {
-                if (val.match(/<h[1-6]\s*[^>]*>(.*?)<\/h[1-6]>/)) {
-                    val = val.match(/<(h[1-6])\s*[^>]*>(.*?)<\/h[1-6]>/);
+                if (val.match(/<h[1-3]\s*[^>]*>(.*?)<\/h[1-3]>/)) {
+                    val = val.match(/<(h[1-3])\s+[^>]*id=["']?([^"'>]+)["']?[^>]*>(.*?)<\/h[1-3]>/);
                     nav[ind] = val[1];
-                    let tmp = { tag: val[1], content: val[2] };
+                    let tmp = { tag: val[1], id: val[2], content: val[3] };
                     this.catalogContent.push(tmp);
                 }
             });
             console.log(this.catalogContent);
             this.mdContent = result;
         },
-        handleAnchor(item) {
-            const navTitle = document.getElementById(item.content);
+        handleAnchor(id) {
+            const navTitle = document.querySelector(`.markdown-body #${id}`);
             navTitle.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
             });
         },
         navClassHandle(val) {
-            let target = document.querySelector(`.catalog #${this.catalogContent[val].content} .catalog-nav`);
+            let target = this.$refs[this.catalogContent[val].id][0];
             let navFocus = document.querySelector('.navFocus');
             navFocus.classList.remove('navFocus');
             target.classList.add('navFocus');
         },
         handleMdScroll() {
-            const md = document.querySelector('.markdown-body');
+            const md = this.$refs.markdownBody;
             let titleOffsetTops = [];
             let tag = 0; // 记录当前内容所在第几个区域来减少无用的dom获取操作
             let scrollTopPre = 0; //记录上一次滚动长度,以判断当前向上还是向下滚动
             for (let item of this.catalogContent) {
-                let mdtitle = document.querySelector(`.markdown-body #${item.content}`);
+                let mdtitle = document.querySelector(`.markdown-body #${item.id}`);
                 titleOffsetTops.push(mdtitle.offsetTop);
             }
+            console.log('itemOffsetTops',titleOffsetTops);
             let len = titleOffsetTops.length - 1;
             md.addEventListener('scroll', () => {
                 let mdScrollTop = md.scrollTop;
@@ -161,9 +173,9 @@ export default {
     display: grid;
     width: 100%;
     height: 100%;
-    grid-template-columns: [c1] 20% [c2] 60% [c3] 20% [c4];
+    grid-template-columns: [c1] 70% [c2] 30% [c3];
     /deep/ .markdown-body {
-        grid-column: 2/3;
+        grid-column: 1/2;
         width: 100%;
         height: 100%;
         position: relative; //这里加定位，是为了更方便的处理offetTop值
@@ -210,12 +222,17 @@ export default {
         }
     }
     .catalog {
-        padding-left: 10px;
+        position: relative;
         font-size: @catalog-font;
         height: max-content;
+        max-height: 400px;
+        overflow-y: scroll;
         align-self: center;
         justify-self: end;
-        margin-right: 30%;
+        margin-right: 10%;
+        &::-webkit-scrollbar {
+                display: none;
+        }
         .catalog-container{
             display: flex;
             align-items: center;
@@ -240,8 +257,11 @@ export default {
             }
             .navFocus {
                 color: rgb(4, 138, 247);
-                transform: scale(1.1);
             }
+        }
+        i {
+            position: absolute;
+            font-size: 20px;
         }
     }
 }
