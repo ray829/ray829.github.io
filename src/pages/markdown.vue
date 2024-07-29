@@ -130,22 +130,22 @@ export default {
                 let mdtitle = document.querySelector(`.markdown-body #${item.id}`);
                 titleOffsetTops.push(mdtitle.offsetTop);
             }
-            console.log('itemOffsetTops',titleOffsetTops);
+            // console.log('itemOffsetTops',titleOffsetTops);
             let len = titleOffsetTops.length - 1;
             md.addEventListener('scroll', () => {
                 let mdScrollTop = md.scrollTop;
                 //判断是否滚动到最底部
                 if (mdScrollTop > (md.scrollHeight - md.clientHeight - 2) && tag !== len) { 
                     tag = len;
-                    console.log(tag);
+                    // console.log(tag);
                     this.navClassHandle(tag);
                 } else if (mdScrollTop >= scrollTopPre && mdScrollTop >= titleOffsetTops[tag+1]) { //若向下滚动且超过当前区域下边界
                     tag++;
-                    console.log(tag);
+                    // console.log(tag);
                     this.navClassHandle(tag);
                 } else if (mdScrollTop < scrollTopPre && mdScrollTop < titleOffsetTops[tag]) { //若向上滚动且超过当前区域上边界
                     tag = --tag < 0 ? 0 : tag;
-                    console.log(tag);
+                    // console.log(tag);
                     this.navClassHandle(tag);
                 }
                 scrollTopPre = mdScrollTop;

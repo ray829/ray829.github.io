@@ -79,6 +79,7 @@ export default {
             document.querySelector(".date span").textContent = newDate.getDate();
             document.querySelector(".day span").textContent = dayNames[newDate.getDay()];
             document.querySelector(".year span").innerHTML = newDate.getFullYear();
+            console.log('clock');
         }, 1000);
     },
 

@@ -26,12 +26,14 @@
 </template>
 
 <script>
+import { debounce } from '@/utils/tool';
+
 export default {
     name: 'CyberloafingNotFound',
 
     data() {
         return {
-            timer: ''
+            n: 0
         };
     },
 
@@ -40,10 +42,10 @@ export default {
             
             this.$refs.backhome.classList.add('ahover');
         });
-        this.$refs.btn.addEventListener('mouseleave', () => {
+        this.$refs.btn.addEventListener('mouseleave', debounce(() => {
+            // console.log('鼠标移出', this.n++);
             this.$refs.backhome.classList.remove('ahover');
-        });
-
+        }, 100));
     },
 
     methods: {

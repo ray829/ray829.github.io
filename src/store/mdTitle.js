@@ -1,4 +1,5 @@
 export default {
+    namespaced: true,  //开启namespace:true，该模块就成为命名空间模块了
     state: {
         mdTitleList: [
             {
@@ -44,6 +45,19 @@ export default {
         ]
     },
     mutations: {
-        
+        setMdInfo(state, mds) {
+            state.mdsInfo = mds; // 将选中的 md 存入状态  
+        },
+        getMdInfo(state, { startInd = 0, gap = 5 }) {
+            let mds = [];
+            state.mdTitleList.map((md, ind) => {
+                if (ind >= startInd && (mds.length - startInd) <= gap) {
+                    let obj = {title: md.title, time: md.time, desc: md.desc}
+                    mds.push(obj);
+                }
+            })
+            // 直接将 mds 存入状态中  
+            state.mdsInfo = mds;
+        }
     }
 }

@@ -21,7 +21,7 @@ export default {
     this.handleTyper();
     document.addEventListener('visibilitychange', () => {
       let state = document.visibilityState;
-      console.log(state);
+      // console.log(state);
       if (state === 'hidden') {
         clearTimeout(this.timerId);
       } else {
@@ -32,7 +32,6 @@ export default {
 
   methods: {
     handleTyper() {
-      console.log(11);
       let container = document.querySelector('.typercontainer');
       let str_ = "且借人间二两墨，一笔相思一笔错";
       // 定义数组索引

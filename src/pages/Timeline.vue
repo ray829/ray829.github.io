@@ -55,20 +55,32 @@
 
 <script>
 
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   name: 'CyberloafingTimeline',
 
   data() {
     return {
-
+      mdsStartInd: 0,
+      mdsGap: 5,
     };
   },
 
+  computed: {
+    ...mapState('mdTitle', ['mdsInfo']), // 获取状态中的mdTitle模块中的mdsInfo 
+  },
+  
   mounted() {
+    this.loadMdInfo();
+    console.log(this.mdsInfo);
   },
 
   methods: {
-
+    ...mapMutations('mdTitle', ['getMdInfo']),
+    loadMdInfo() {
+      this.getMdInfo({ startInd: 0, gap: 5 }); // 调用 mutation  
+    },
   },
 };
 </script>
