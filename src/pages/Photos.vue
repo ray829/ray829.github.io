@@ -1,10 +1,12 @@
 <template>
   <div>
-    <h2>照片</h2>
+    <myClock />
   </div>
 </template>
 
 <script>
+import myClock from "@/components/myClock.vue";
+
 export default {
   name: 'CyberloafingPhotos',
 
@@ -13,6 +15,8 @@ export default {
       
     };
   },
+
+  components: { myClock },
 
   mounted() {
     

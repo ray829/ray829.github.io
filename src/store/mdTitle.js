@@ -3,7 +3,7 @@ export default {
         mdTitleList: [
             {
                 name: "CommonJs&ESMoudle",
-                imgUrl: "https://s1.imagehub.cc/images/2024/07/24/b148bfb65f01a468d9e91e30216e7575.md.webp",
+                imgUrl: "https://s1.imagehub.cc/images/2024/07/29/100bd44287da58eafa087cc1d1450653.md.jpeg",
                 title: "CommonJs和ESMoudle",
                 time: "2024-07-11 18:43",
                 tag: "Nodejs JS ES6",

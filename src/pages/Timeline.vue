@@ -110,7 +110,6 @@ h1 {
   transform: translateX(-50%);
   font-size: 56px;
   font-weight: 900;
-  background-image: url('');
 }
 
 .timeline::before {
@@ -172,7 +171,7 @@ h1 {
   width: 0;
   height: 0;
   top: 30px;
-  right: -15px;
+  right: -14px;
   border-width: 10px 0 10px 15px;
   border-color: transparent transparent transparent #C5CAE9;
 }

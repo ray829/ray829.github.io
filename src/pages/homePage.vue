@@ -146,6 +146,7 @@ export default {
     overflow-x: visible;
     img {
       grid-column-start: 1;
+      object-fit: cover;
       width: 100%;
       height: 100%;
       display: block;

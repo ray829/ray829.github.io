@@ -1,65 +1,72 @@
 <template>
-  <div class="container">
-    <div class="room">
-        <div class="cuboid">
-            <div class="side"></div>
-            <div class="side"></div>
-            <div class="side"></div>
-        </div>
-        <div class="oops">
-            <h2>OOPS!</h2>
-            <p>We can't find the page that you're looking for</p>
-        </div>
-        <div class="center-line">
-            <div class="hole">
-                <div class="ladder-shadow"></div>
-                <div class="ladder"></div>
+    <div class="container">
+        <div class="room">
+            <div class="cuboid">
+                <div class="side"></div>
+                <div class="side"></div>
+                <div class="side"></div>
             </div>
-            <div class="four">4</div>
-            <div class="four">4</div>
-            <div class="btn">
-                <a href="#/">BACK TO HOME</a>
+            <div class="oops">
+                <h2>OOPS!</h2>
+                <p>We can't find the page you ware looking for !</p>
+            </div>
+            <div class="center-line">
+                <div class="hole">
+                    <div class="ladder-shadow"></div>
+                    <div class="ladder"></div>
+                </div>
+                <div class="four">4</div>
+                <div class="four">4</div>
+                <div class="btn" ref="btn">
+                    <a href="#/" class="btna" ref="backhome">BACK TO HOME</a>
+                </div>
             </div>
         </div>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
-  name: 'CyberloafingNotFound',
+    name: 'CyberloafingNotFound',
 
-  data() {
-    return {
-      
-    };
-  },
+    data() {
+        return {
+            timer: ''
+        };
+    },
 
-  mounted() {
-    
-  },
+    mounted() {
+        this.$refs.btn.addEventListener('mouseenter', () => {
+            
+            this.$refs.backhome.classList.add('ahover');
+        });
+        this.$refs.btn.addEventListener('mouseleave', () => {
+            this.$refs.backhome.classList.remove('ahover');
+        });
 
-  methods: {
-    
-  },
+    },
+
+    methods: {
+
+    },
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
 .container {
-	margin: 0;
-	padding: 0;
-	width: 100vw;
-	height: 100vh;
-	overflow: hidden;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     perspective: 1000vmin;
     font-family: 'Varela Round', Arial, Helvetica, serif;
-	background: var(--c0);
+    background: var(--c0);
 }
 
 .container * {
@@ -80,35 +87,35 @@ export default {
 }
 
 .cuboid .side {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	height: 100%;
-	width: 100%;
-	border-radius: 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    width: 100%;
+    border-radius: 2px;
     box-shadow: 0vmin 0vmin 0.5vmin 0 var(--c0) inset, 0 0 5vmin 0 var(--c0);
 }
 
 .cuboid .side:nth-of-type(1) {
-	transform: translate3d(-50%, -50%, calc(var(--size) * -0.5vmin)) rotateY(180deg);
-	background: radial-gradient(circle at 100% 0%, var(--c4), #fff0 45vmin),radial-gradient(circle at 100% 0%, var(--c1), var(--c4));
+    transform: translate3d(-50%, -50%, calc(var(--size) * -0.5vmin)) rotateY(180deg);
+    background: radial-gradient(circle at 100% 0%, var(--c4), #fff0 45vmin), radial-gradient(circle at 100% 0%, var(--c1), var(--c4));
 }
- 
+
 .cuboid .side:nth-of-type(2) {
-	width: calc(var(--size) * 1vmin);
-	transform: translate(-50%, -50%) rotateY(-90deg) translate3d(0, 0, calc(var(--size) * 0.5vmin));
-	background: radial-gradient(circle at 0% 0%, var(--c4), #fff0 45vmin),radial-gradient(circle at 0% 0%, var(--c2), var(--c5));
+    width: calc(var(--size) * 1vmin);
+    transform: translate(-50%, -50%) rotateY(-90deg) translate3d(0, 0, calc(var(--size) * 0.5vmin));
+    background: radial-gradient(circle at 0% 0%, var(--c4), #fff0 45vmin), radial-gradient(circle at 0% 0%, var(--c2), var(--c5));
 }
 
 .cuboid .side:nth-of-type(3) {
-	height: calc(var(--size) * 1vmin);
-	transform: translate(-50%, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--size) * 0.5vmin));
-	background: radial-gradient(circle at 0% 0%, var(--c4), #fff0 45vmin), radial-gradient(circle at 0% 0%, var(--c1), var(--c6));
+    height: calc(var(--size) * 1vmin);
+    transform: translate(-50%, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--size) * 0.5vmin));
+    background: radial-gradient(circle at 0% 0%, var(--c4), #fff0 45vmin), radial-gradient(circle at 0% 0%, var(--c1), var(--c6));
 }
 
 
 .room {
-	width: 100vw;
+    width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -166,9 +173,9 @@ export default {
 .hole {
     width: 28vmin;
     height: 20vmin;
-    background: 
-        radial-gradient(circle at 50% 0%, var(--c2), #fff0 45%), 
-        radial-gradient(circle at 30% 100%, #061b43, #fff0 77%), 
+    background:
+        radial-gradient(circle at 50% 0%, var(--c2), #fff0 45%),
+        radial-gradient(circle at 30% 100%, #061b43, #fff0 77%),
         radial-gradient(circle at 20% 100%, var(--c3), var(--c2), var(--c2));
     border-radius: 100%;
     box-shadow: 0 -2px 4px -2px #fffc, 0 2px 3px -3px #fffc inset, 0 2px 6px -4px #000;
@@ -181,11 +188,11 @@ export default {
 .ladder,
 .ladder-shadow {
     --shadow: #0008;
-    background: 
-        linear-gradient(180deg, #fff0 33%, var(--shadow), #000), 
-        linear-gradient(90deg, #cec3b9 0 1.2vmin, #b3aba2 0 1.5vmin, #fff0 0 100%), 
-        linear-gradient(90deg, #cec3b9 0 1.2vmin, #b3aba2 0 1.75vmin, #fff0 0 calc(100% - 1.75vmin)), 
-        repeating-linear-gradient(0deg, #cec3b9 0 1.2vmin, #e7dbcf 0 1.75vmin, #fff0 0 6.75vmin), 
+    background:
+        linear-gradient(180deg, #fff0 33%, var(--shadow), #000),
+        linear-gradient(90deg, #cec3b9 0 1.2vmin, #b3aba2 0 1.5vmin, #fff0 0 100%),
+        linear-gradient(90deg, #cec3b9 0 1.2vmin, #b3aba2 0 1.75vmin, #fff0 0 calc(100% - 1.75vmin)),
+        repeating-linear-gradient(0deg, #cec3b9 0 1.2vmin, #e7dbcf 0 1.75vmin, #fff0 0 6.75vmin),
         linear-gradient(90deg, #cec3b9 0 1.2vmin, #b3aba2 0 1.75vmin, #fff0 0 calc(100% - 1.75vmin));
     width: 10vmin;
     height: 30vmin;
@@ -204,7 +211,7 @@ export default {
     --shadow: #0000;
 }
 
-.ladder:before, 
+.ladder:before,
 .ladder:after {
     content: "";
     position: absolute;
@@ -226,6 +233,7 @@ export default {
     font-weight: bold;
     font-family: Arial, Helvetica, serif;
     position: absolute;
+    user-select: none;
     margin-left: -58vmin;
     margin-top: 27vmin;
     transform: rotate(22deg) scale(0.8, 0.85) rotateX(40deg) rotateY(-10deg) rotateZ(-5deg);
@@ -234,15 +242,16 @@ export default {
     filter: drop-shadow(10px -4px 10px var(--c4));
 }
 
-.four + .four {
+.four+.four {
+    user-select: none;
     margin-left: 43vmin;
     margin-top: 15vmin;
     transform: scale(0.95, 0.75) rotateX(5deg) rotateY(35deg) rotateZ(30deg) translateZ(18vmin);
     text-shadow: 1px 0px 2px #94b5ff, 3px 0px 2px #94b5ff80, 1px 0px 0px var(--c3), 2px 0px 2px var(--c3), 4px 0px 2px var(--c3), 5px 0px 2px var(--c3), 6px 0px 2px var(--c3), 7px 0px 2px var(--c3), 8px 0px 2px var(--c3), 9px 0px 2px var(--c3), 10px 0px 2px var(--c3), 11px 0px 3px var(--c3), 12px 0px 3px var(--c3), 20px 0px 3px var(--c3), 13px 0px 5px var(--c6), 18px -6px 15px var(--c6);
 }
 
-.four + .four:before,
-.four + .four:after {
+.four+.four:before,
+.four+.four:after {
     content: "4";
     color: var(--c6);
     position: absolute;
@@ -254,9 +263,11 @@ export default {
     clip-path: polygon(0 0, 100% 0, 100% 50%, 0 46%, 0 0);
     filter: blur(5px);
     opacity: 0.4;
+    user-select: none;
 }
 
-.four + .four:after {
+.four+.four:after {
+    user-select: none;
     transform-origin: 50% 100%;
     transform: rotatex(12deg) rotate(-13deg) translate(-27.5vmin, -5.5vmin) skew(-32deg, 6deg) scaleX(1.1);
     clip-path: polygon(0 39.75%, 100% 49.25%, 100% 100%, 0 100%, 0 50%);
@@ -270,7 +281,7 @@ export default {
     transform: rotateX(15deg);
 }
 
-.btn a {
+.btna {
     border-radius: 0.2vmin;
     padding: 1.5vmin 2.5vmin;
     background: #528cff;
@@ -284,10 +295,10 @@ export default {
     box-shadow: 1px 0px 1px #94b5ff, 0px 2px 2px #94b5ff80, 0px 1px 2px var(--c3), 0px 4px 2px var(--c3), 0px 6px 2px var(--c3), 0px 8px 2px var(--c3), 0px 10px 2px var(--c3), 0px 12px 2px var(--c3), 0px 14px 2px var(--c3), 0px 16px 2px var(--c3), 0px 18px 2px var(--c3), 0px 20px 3px var(--c3), 2px 22px 3px var(--c3), 0px 23px 3px var(--c6), 0px 3px 15px var(--c6);
 }
 
-.btn a:hover {
-    top: 16px;
-    color: var(--c6);
-    box-shadow: 1px 0px 1px #94b5ff, 0px 2px 2px #94b5ff80, 0px 1px 2px var(--c3), 0px 1px 2px var(--c3), 0px 2px 2px var(--c3), 0px 2px 2px var(--c3), 0px 2px 2px var(--c3), 0px 2px 2px var(--c3), 0px 2px 3px var(--c3), 0px 2px 3px var(--c3), 0px 2px 2px var(--c3), 0px 2px 3px var(--c3), 2px 2px 3px var(--c3), 0px 4px 3px var(--c6), 2px 5px 6px var(--c6);
+.ahover {
+    top: 16px ;
+    color: var(--c6) ;
+    box-shadow: 1px 0px 1px #94b5ff, 0px 2px 2px #94b5ff80, 0px 1px 2px var(--c3), 0px 1px 2px var(--c3), 0px 2px 2px var(--c3), 0px 2px 2px var(--c3), 0px 2px 2px var(--c3), 0px 2px 2px var(--c3), 0px 2px 3px var(--c3), 0px 2px 3px var(--c3), 0px 2px 2px var(--c3), 0px 2px 3px var(--c3), 2px 2px 3px var(--c3), 0px 4px 3px var(--c6), 2px 5px 6px var(--c6) ;
 }
 
 .btn::after {
@@ -315,6 +326,9 @@ export default {
 
 
 @media screen and (orientation: portrait) {
-    .oops p { line-height: 10vmin; font-size: 6.5vmin; }
+    .oops p {
+        line-height: 10vmin;
+        font-size: 6.5vmin;
+    }
 }
 </style>
