@@ -5,7 +5,7 @@ export default {
             {
                 name: "CommonJs&ESMoudle",
                 imgUrl: "https://s1.imagehub.cc/images/2024/07/29/100bd44287da58eafa087cc1d1450653.md.jpeg",
-                title: "CommonJs和ESMoudle",
+                title: "CommonJs 和 ESMoudle",
                 time: "2024-07-11 18:43",
                 tag: "Nodejs JS ES6",
                 desc: "今天我们来深度分析一下 `Commonjs` 和 `Es Module`，希望通过本文的学习，能够让大家彻底明白 `Commonjs` 和 `Es Module` 原理",
@@ -52,7 +52,7 @@ export default {
             let mds = [];
             state.mdTitleList.map((md, ind) => {
                 if (ind >= startInd && (mds.length - startInd) <= gap) {
-                    let obj = {title: md.title, time: md.time, desc: md.desc}
+                    let obj = {title: md.title, time: md.time, desc: md.desc, name: md.name}
                     mds.push(obj);
                 }
             })

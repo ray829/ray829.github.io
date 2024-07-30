@@ -110,8 +110,12 @@ export default {
 
 :root {
   --background-color: #a5dff9;
+  --bacc-a4: rgba(255, 255, 255, .4);
   --font-color: rgb(65, 166, 249);
   --color-gray: rgb(179, 182, 183);
+  --fontc1: rgba(103, 103, 103, 1);
+  --fontc2: rgba(133, 133, 133, 1);
+  --fontc3: rgba(56, 56, 56, 1);
   --scroll-hover-color: rgba(108, 108, 108, 1);
   background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
   --c0: #71a1ff;
@@ -121,6 +125,7 @@ export default {
   --c4: #2151af;
   --c5: #244483;
   --c6: #103071;
+  --c7: #3F51B5;
   --clr: 1; /* change color from 1 to 12 */
   --hue: calc(30deg - (30deg * var(--clr))); 
 }

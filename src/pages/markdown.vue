@@ -105,7 +105,7 @@ export default {
                     this.catalogContent.push(tmp);
                 }
             });
-            console.log(this.catalogContent);
+            // console.log(this.catalogContent);
             this.mdContent = result;
         },
         handleAnchor(id) {

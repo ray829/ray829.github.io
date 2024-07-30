@@ -1,50 +1,20 @@
 <template>
   <div class="mytime">
+    <div class="time-header">
+      <div class="time-title">时间轴</div>
+      <myClock class="myclock"/>
+    </div>
     <section class="timeline">
       <div class="container">
-        <!--     ITEM 1  -->
-        <div class="timeline-item">
+        <div class="timeline-item" ref='timeItem' v-for="(item, index) of mdsInfo" :key="item.time">
           <div class="timeline-img"></div>
 
-          <div class="timeline-content js--fadeInLeft">
-            <h2>Founding</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate
-              saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias,
-              ullam.</p>
-          </div>
-        </div>
-
-        <!--     ITEM 2  -->
-        <div class="timeline-item">
-          <div class="timeline-img"></div>
-          <div class="timeline-content js--fadeInRight">
-            <h2>Growth Expansion</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate
-              saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias,
-              ullam.</p>
-          </div>
-        </div>
-
-        <!--     ITEM 1  -->
-        <div class="timeline-item">
-          <div class="timeline-img"></div>
-
-          <div class="timeline-content js--fadeInLeft">
-            <h2>Major Achievements</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate
-              saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias,
-              ullam.</p>
-          </div>
-        </div>
-
-        <!--     ITEM 2  -->
-        <div class="timeline-item">
-          <div class="timeline-img"></div>
-          <div class="timeline-content js--fadeInRight">
-            <h2>Recent Milestones</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate
-              saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias,
-              ullam.</p>
+          <div class="timeline-content animate__animated" :class="jsFadeStyle(index)">
+            <!-- <h2>{{item.title}}</h2> -->
+            <router-link class="timeline-Title" :to="{ path: '/markdown', query: { mdName: item.name } }">{{ item.title
+              }}</router-link>
+            <div class="itemTime">{{ item.time }}</div>
+            <p>{{ item.desc }}</p>
           </div>
         </div>
       </div>
@@ -56,38 +26,66 @@
 <script>
 
 import { mapState, mapMutations } from 'vuex';
+import 'animate.css';
+
+import myClock from "@/components/myClock.vue";
 
 export default {
   name: 'CyberloafingTimeline',
 
+  components: { myClock },
   data() {
     return {
       mdsStartInd: 0,
       mdsGap: 5,
+      itemsCount: 0,
     };
   },
 
   computed: {
-    ...mapState('mdTitle', ['mdsInfo']), // 获取状态中的mdTitle模块中的mdsInfo 
+    ...mapState('mdTitle', ['mdsInfo']), // 获取状态中的mdTitle模块中的mdsInfo
   },
-  
-  mounted() {
+
+  created() {
     this.loadMdInfo();
-    console.log(this.mdsInfo);
+  },
+
+  mounted() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          console.log(`${entry.target.children[1].firstChild.textContent} is visible.`);
+          if (this.itemsCount % 2 === 0) {
+            entry.target.children[1].classList.add('animate__slideInLeft');
+          } else {
+            entry.target.children[1].classList.add('animate__slideInRight');
+          }
+          this.itemsCount++;
+          // 一旦元素可见，取消监测
+          observer.unobserve(entry.target);
+        }  
+      });
+    });
+    this.$refs.timeItem.forEach((e) => {
+      observer.observe(e);
+    })
   },
 
   methods: {
     ...mapMutations('mdTitle', ['getMdInfo']),
     loadMdInfo() {
-      this.getMdInfo({ startInd: 0, gap: 5 }); // 调用 mutation  
+      this.getMdInfo({ startInd: this.mdsStartInd, gap: this.mdsGap }); // 调用 mutation  
     },
+    jsFadeStyle(index) {
+      return index % 2 === 0 ? 'js--fadeInLeft' : 'js--fadeInRight';
+    }
   },
 };
 </script>
 
 <style lang="less" scoped>
 section {
-  padding-top: 200px;
+  padding-top: 50px;
 }
 
 .mytime {
@@ -109,6 +107,32 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 3px;
   font-weight: 400;
+}
+
+p {
+  margin-top: 10px;
+  color: var(--fontc1);
+}
+
+.time-header {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  justify-items: center;
+  align-items: center;
+  column-gap: 60px;
+}
+
+.time-title {
+  justify-self: flex-end;
+  padding-right: 40px;
+  color: var(--c0);
+  font-size: 38px;
+  font-weight: 600;
+}
+
+.myclock {
+  justify-self: flex-start;
 }
 
 .timeline {
@@ -141,7 +165,7 @@ h1 {
 
 .timeline-item:nth-child(even) .timeline-content {
   float: right;
-  padding: 40px 30px 10px 30px;
+  padding: 10px 30px;
 }
 
 .timeline-item:nth-child(even) .timeline-content .date {
@@ -191,7 +215,7 @@ h1 {
 .timeline-img {
   width: 30px;
   height: 30px;
-  background: #3F51B5;
+  background: var(--c7);
   border-radius: 50%;
   position: absolute;
   left: 50%;
@@ -199,73 +223,44 @@ h1 {
   margin-left: -15px;
 }
 
-a {
-  background: #3F51B5;
-  color: #FFFFFF;
-  padding: 8px 20px;
-  text-transform: uppercase;
-  font-size: 14px;
-  margin-bottom: 20px;
-  margin-top: 10px;
-  display: inline-block;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.6);
+.itemTime {
+  font-size: 16px;
+  color: var(--fontc2);
+  height: max-content;
+  margin-top: 15px;
 }
 
-a:hover,
-a:active,
-a:focus {
-  background: #32408f;
-  color: #FFFFFF;
+.timeline-Title {
   text-decoration: none;
-}
-
-.timeline-card {
-  padding: 0 !important;
-}
-
-.timeline-card p {
-  padding: 0 20px;
-}
-
-.timeline-card a {
-  margin-left: 20px;
-}
-
-.timeline-item .timeline-img-header {
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4)), url("https://picsum.photos/1000/800/?random") center center no-repeat;
-  background-size: cover;
-}
-
-.timeline-img-header {
-  height: 200px;
+  color: var(--fontc3);
+  font-size: 26px;
+  line-height: 26px;
+  font-weight: 600;
+  display: block;
+  padding-top: 20px;
   position: relative;
-  margin-bottom: 20px;
+  &::before {
+    content: '\25B8';
+    position: absolute;
+    left: -25px;
+    color: var(--fontc2);
+    font-size: 30px;
+    animation: decroTitle 1s infinite;
+    transform-origin: center center;
+    perspective: 100px;
+      /* 添加透视效果 */
+  }
+  @keyframes decroTitle {
+    0%, 100% {
+      transform: rotateX(0deg);
+    }
+
+    50% {
+      transform: rotateX(180deg); 
+    }
+  }
 }
 
-.timeline-img-header h2 {
-  color: #FFFFFF;
-  position: absolute;
-  bottom: 5px;
-  left: 20px;
-}
-
-blockquote {
-  margin-top: 30px;
-  color: #757575;
-  border-left-color: #3F51B5;
-  padding: 0 20px;
-}
-
-.date {
-  background: #FF4081;
-  display: inline-block;
-  color: #FFFFFF;
-  padding: 10px;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
 
 @media screen and (max-width: 768px) {
   .timeline::before {

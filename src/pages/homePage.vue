@@ -155,8 +155,8 @@ export default {
     .mdBlurb {
       grid-column-start: 2;
       align-self: self-start;
-      color: rgba(103, 103, 103, 1);
-      background-color: rgba(255, 255, 255, .4);
+      color: var(--fontc1);
+      background-color: var(--bacc-a4);
       display: grid;
       grid-template-rows: 30% 30% 40%;
       align-items: center;
@@ -181,7 +181,7 @@ export default {
       div {
         justify-self: center;
         font-size: 16px;
-        color: rgba(133, 133, 133, 1);
+        color: var(--fontc2);
       }
       span {
         align-self: self-start;

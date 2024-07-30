@@ -53,14 +53,15 @@ export default {
 
     data() {
         return {
-            intervalId: ''
+            intervalId: '',
         };
     },
 
 
     mounted() {
-        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+        var monthNames = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+        var dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 
         var newDate = new Date();
 
@@ -79,7 +80,6 @@ export default {
             document.querySelector(".date span").textContent = newDate.getDate();
             document.querySelector(".day span").textContent = dayNames[newDate.getDay()];
             document.querySelector(".year span").innerHTML = newDate.getFullYear();
-            console.log('clock');
         }, 1000);
     },
 
@@ -96,7 +96,7 @@ export default {
 <style lang="less" scoped>
 
 .myClock {
-    margin-top: 200px;
+    margin-top: 100px;
 }
 /* -- usable codes start -- */
 
