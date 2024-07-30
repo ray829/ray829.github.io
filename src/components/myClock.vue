@@ -158,37 +158,56 @@ span, ul, li {
     position: absolute;
     right: 0;
     z-index: 2;
-    -webkit-transform: rotate(-10deg) translate(7px, 8px);
-    -moz-transform: rotate(-10deg) translate(7px, 8px);
-    -ms-transform: rotate(-10deg) translate(7px, 8px);
-    -o-transform: rotate(-10deg) translate(7px, 8px);
     transform: rotate(-10deg) translate(7px, 8px);
+    animation: rightshake 1s linear infinite;
     background: #EFC94C;
+}
+
+@keyframes rightshake {
+    0%, 100% {
+        transform: rotate(-10deg) translate(7px, 8px);
+    }
+    50% {
+        transform: rotate(-1deg) translate(1px, 2px);
+    }
 }
 
 .left {
     position: absolute;
     left: 0;
     z-index: 1;
-    -webkit-transform: rotate(5deg) translate(-4px, 4px);
-    -moz-transform: rotate(5deg) translate(-4px, 4px);
-    -ms-transform: rotate(5deg) translate(-4px, 4px);
-    -o-transform: rotate(5deg) translate(-4px, 4px);
     transform: rotate(5deg) translate(-4px, 4px);
+    animation: leftshake 1s linear infinite;
     background: #3498DB;
 }
 
-/*-----*/
+@keyframes leftshake {
+    0%,
+    100% {
+        transform: rotate(5deg) translate(-4px, 4px);
+    }
 
-.outer:hover .inner {
-    -webkit-transform: rotate(0) translate(0);
-    -moz-transform: rotate(0) translate(0);
-    -ms-transform: rotate(0) translate(0);
-    -o-transform: rotate(0) translate(0);
-    transform: rotate(0) translate(0);
+    50% {
+        transform: rotate(1deg) translate(-1px, 1px);
+    }
 }
 
 /*-----*/
+
+.outer:hover::after {
+    content: 'Click !';
+    font-size: 18px;
+    font-weight: 600;
+    position: absolute;
+    right: -70px;
+    top: -30px;
+    color: var(--fontc3);
+}
+
+/*-----*/
+.outer:active::after {
+    content: '',
+}
 
 .outer:active .inner {
     -webkit-transform: rotate(0) translate(0) scale(0.9);
@@ -199,7 +218,7 @@ span, ul, li {
 }
 
 .outer:active .front .date {
-    transform: scale(2);
+    transform: scale(1.5);
 }
 
 .outer:active .front .day,
@@ -219,6 +238,7 @@ span, ul, li {
     -ms-transform: rotate(-5deg) translateX(80px) scale(0.9);
     -o-transform: rotate(-5deg) translateX(80px) scale(0.9);
     transform: rotate(-5deg) translateX(80px) scale(0.9);
+    animation: none;
 }
 
 .outer:active .left {
@@ -227,12 +247,13 @@ span, ul, li {
     -ms-transform: rotate(5deg) translateX(-80px) scale(0.9);
     -o-transform: rotate(5deg) translateX(-80px) scale(0.9);
     transform: rotate(5deg) translateX(-80px) scale(0.9);
+    animation: none;
 }
 
 /*-----*/
 
 .outer:active .calendarMain {
-    transform: scale(1.8);
+    transform: scale(1.2);
     opacity: 0;
     visibility: hidden;
 }
@@ -304,9 +325,9 @@ span, ul, li {
     width: 100%;
     position: absolute;
     top: 0;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 30px;
-    font-weight: 300;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0;
     text-align: center;
