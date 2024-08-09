@@ -96,7 +96,7 @@ export default {
 <style lang="less" scoped>
 
 .myClock {
-    margin-top: 100px;
+    margin-top: 120px;
 }
 /* -- usable codes start -- */
 

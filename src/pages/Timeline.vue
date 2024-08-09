@@ -2,7 +2,6 @@
   <div class="mytime">
     <div class="time-header">
       <div class="time-title">时间轴</div>
-      <myClock class="myclock"/>
     </div>
     <section class="timeline">
       <div class="container">
@@ -28,12 +27,9 @@
 import { mapState, mapMutations } from 'vuex';
 import 'animate.css';
 
-import myClock from "@/components/myClock.vue";
-
 export default {
   name: 'CyberloafingTimeline',
 
-  components: { myClock },
   data() {
     return {
       mdsStartInd: 0,
@@ -84,9 +80,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-section {
-  padding-top: 50px;
-}
 
 .mytime {
   height: 100%;
@@ -115,24 +108,19 @@ p {
 }
 
 .time-header {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto;
-  justify-items: center;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  column-gap: 60px;
+  padding: 100px 0;
 }
 
 .time-title {
   justify-self: flex-end;
   padding-right: 40px;
-  color: var(--c0);
-  font-size: 38px;
+  color: var(--fontc3);
+  font-size: 58px;
   font-weight: 600;
-}
-
-.myclock {
-  justify-self: flex-start;
+  letter-spacing: 5px;
 }
 
 .timeline {

@@ -37,6 +37,7 @@
           <li><a class="iconfont icon-github-fill" href="https://github.com/ray829"></a></li>
         </ul>
       </el-card>
+      <myClock class="myclock" />
     </div>
   </div>
 </template>
@@ -44,11 +45,12 @@
 <script>
 
 import 'animate.css';
+import myClock from "@/components/myClock.vue";
 
 export default {
   name: 'CyberloafingHomePage',
 
-  components: {},
+  components: { myClock },
 
   data() {
     return {
